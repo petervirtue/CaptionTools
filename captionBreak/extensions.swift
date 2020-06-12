@@ -55,3 +55,69 @@ extension UIPasteboard {
         }
     }
 }
+
+extension UIView {
+    
+    func setGradient(colors: [UIColor?]) -> CAGradientLayer {
+        return self.setGradient(colors: colors, locations: nil)
+    }
+    
+    func setGradient(colors: [UIColor?], locations: [NSNumber]?) -> CAGradientLayer {
+        let grad = CAGradientLayer()
+        grad.frame = self.bounds
+        grad.colors = colors.map { $0!.cgColor }
+        grad.locations = locations
+        grad.startPoint = CGPoint(x: 0, y: 0)
+        grad.endPoint = CGPoint(x: 1, y: 1)
+        self.layer.insertSublayer(grad, at: 0)
+        return grad
+    }
+    
+    func update() {
+        self.setNeedsDisplay()
+        
+        for v in self.subviews {
+            v.update()
+        }
+    }
+    
+    func constraint(withID: String) -> NSLayoutConstraint? {
+        return self.constraints.filter{ $0.identifier == withID }.first
+    }
+}
+
+extension NSLayoutAnchor {
+    @objc func constraintEqualToAnchor(_ anchor: NSLayoutAnchor, constant: CGFloat, id: String) -> NSLayoutConstraint {
+        let con = self.constraint(equalTo: anchor, constant: constant)
+        con.identifier = id
+        return con
+    }
+}
+
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b, a: CGFloat
+        
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 8 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                    self.init(red: r, green: g, blue: b, alpha: a)
+                    return
+                }
+            }
+        }
+        
+        return nil
+    }
+}
