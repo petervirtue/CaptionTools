@@ -53,8 +53,7 @@ class textEditBar: UIView {
         
         // Hashtags
         hashtags = UIButton(frame: CGRect(x: clear.frame.maxX, y: 0, width: self.frame.width / 6, height: self.frame.height))
-        hashtags.setTitle("#", for: .normal)
-        hashtags.setTitleColor(Colors.gray, for: .normal)
+        hashtags.setImage(UIImage(systemName: "number"), for: .normal)
         hashtags.tintColor = Colors.gray
         self.addSubview(hashtags)
         

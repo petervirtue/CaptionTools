@@ -8,7 +8,15 @@
 
 import UIKit
 
-class hashtagsVC: UIViewController {
+class hashtagsVC: UITableViewController {
+    
+    // Shared instance
+    
+    static let sharedInstance = hashtagsVC()
+    
+    // Components
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

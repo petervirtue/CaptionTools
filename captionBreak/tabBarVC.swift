@@ -10,7 +10,8 @@ import UIKit
 
 class tabBarVC: UITabBarController {
     
-    //View controller items
+    //View controllers
+    
     var home: UIViewController!
     var drafts: UIViewController!
     var hashtags: UIViewController!
@@ -18,26 +19,26 @@ class tabBarVC: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Home view controller
+        // Home
+        
         home = LightNavigationController(rootViewController: homeVC.sharedInstance)
         home.title = "Create"
         home.tabBarItem.image = UIImage(systemName: "square.and.pencil")
         
-        
         // Drafts
         
-        drafts = LightNavigationController(rootViewController: draftsVC())
-        drafts.title = "Title"
+        drafts = LightNavigationController(rootViewController: draftsVC.sharedInstance)
+        drafts.title = "Drafts"
         drafts.tabBarItem.image = UIImage(systemName: "folder")
         
         // Hashtags
         
-        hashtags = LightNavigationController(rootViewController: hashtagsVC())
+        hashtags = LightNavigationController(rootViewController: hashtagsVC.sharedInstance)
         hashtags.title = "Hashtags"
-        //TEMPORARY ICON
-        hashtags.tabBarItem.image = UIImage(systemName: "briefcase")
+        hashtags.tabBarItem.image = UIImage(systemName: "number.square")
         
         // Adding all view controllers
+        
         self.viewControllers = [drafts, home, hashtags]
         self.selectedIndex = 1
 

@@ -121,3 +121,89 @@ extension UIColor {
         return nil
     }
 }
+
+extension NSData {
+    func toAttributedString() -> NSAttributedString? {
+        let data = Data(referencing: self)
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.rtfd,
+            .characterEncoding: String.Encoding.utf8
+        ]
+        
+        return try? NSAttributedString(data: data, options: options, documentAttributes: nil)
+    }
+}
+
+extension NSAttributedString {
+    func toNSData() -> NSData? {
+        let options : [NSAttributedString.DocumentAttributeKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.rtfd,
+            .characterEncoding: String.Encoding.utf8
+        ]
+        
+        let range = NSRange(location: 0, length: length)
+        guard let data = try? data(from: range, documentAttributes: options) else {
+            return nil
+        }
+        
+        return NSData(data: data)
+    }
+}
+
+extension UITableView {
+    
+    func setEmptyView(title: String, sub: String) {
+        
+        // Components
+        
+        let ev = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
+        let titleLabel = UILabel()
+        let subLabel = UILabel()
+        
+        // Title label
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.text = title
+        
+        let titleCons = [
+            titleLabel.centerXAnchor.constraint(equalTo: ev.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: ev.centerYAnchor),
+        ]
+        
+        ev.addSubview(titleLabel)
+        
+        NSLayoutConstraint.activate(titleCons)
+        
+        // Sub label
+    
+        subLabel.translatesAutoresizingMaskIntoConstraints = false
+        subLabel.textColor = UIColor.lightGray
+        subLabel.font = UIFont.systemFont(ofSize: 17)
+        subLabel.numberOfLines = 0
+        subLabel.textAlignment = .center
+        subLabel.text = sub
+        
+        let subCons = [
+            subLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
+            subLabel.leftAnchor.constraint(equalTo: ev.leftAnchor, constant: 20),
+            subLabel.rightAnchor.constraint(equalTo: ev.rightAnchor, constant: -20)
+        ]
+        
+        ev.addSubview(subLabel)
+        
+        NSLayoutConstraint.activate(subCons)
+        
+        // Set the background
+        
+        self.backgroundView = ev
+        //self.separatorStyle = .none
+    }
+    
+    func restoreFromEmpty() {
+        
+        self.backgroundView = nil
+        //self.separatorStyle = .singleLine
+    }
+}

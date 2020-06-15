@@ -86,9 +86,17 @@ class homeVC: UIViewController, UITextViewDelegate {
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.tintColor = Colors.igPink
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        // Save Draft button
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"), style: .plain, target: self, action: #selector(saveCaption))
+        
+        // Share Button and Previe Button
+        self.navigationItem.leftBarButtonItems = [UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareText)), UIBarButtonItem(image: UIImage(systemName: "person.crop.square.fill"), style: .plain, target: self, action: #selector(showPreview))]
         
         // Tab bar controller
         
@@ -127,7 +135,7 @@ class homeVC: UIViewController, UITextViewDelegate {
         captionIn = UITextView(frame: .zero)
         captionIn.translatesAutoresizingMaskIntoConstraints = false
         captionIn.backgroundColor = Colors.lightGray
-        captionIn.font = UIFont.systemFont(ofSize: 16)
+        captionIn.font = UIFont(name: "Helvetica Neue", size: 16)//UIFont.systemFont(ofSize: 16)
         captionIn.textColor = UIColor.lightGray
         captionIn.text = "Start caption here..."
         
@@ -165,7 +173,7 @@ class homeVC: UIViewController, UITextViewDelegate {
             bottomPlate.leftAnchor.constraint(equalTo: l.leftAnchor),
             bottomPlate.rightAnchor.constraint(equalTo: l.rightAnchor),
             bottomPlate.bottomAnchor.constraint(equalTo: l.bottomAnchor, constant: 30),
-            bottomPlate.topAnchor.constraint(equalTo: l.bottomAnchor, constant: -90)
+            bottomPlate.topAnchor.constraint(equalTo: l.bottomAnchor, constant: -95)
         ]
         
         self.view.addSubview(bottomPlate)
@@ -180,20 +188,20 @@ class homeVC: UIViewController, UITextViewDelegate {
         previewButton.backgroundColor = UIColor.white
         previewButton.layer.cornerRadius = 15
         previewButton.layer.borderWidth = 2.5
-        previewButton.layer.borderColor = Colors.lightGray.cgColor
+        previewButton.layer.borderColor = Colors.igPink!.cgColor
         previewButton.clipsToBounds = true
-        previewButton.tintColor = Colors.gray
+        previewButton.tintColor = Colors.igPink
         
         let previewCons = [
             previewButton.topAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 40),
-            previewButton.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 40),
-            previewButton.rightAnchor.constraint(equalTo: l.leftAnchor, constant: 80),
-            previewButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 80)
+            previewButton.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 45),
+            previewButton.rightAnchor.constraint(equalTo: l.leftAnchor, constant: 90),
+            previewButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
         ]
         
-        self.view.addSubview(previewButton)
+        //self.view.addSubview(previewButton)
         
-        NSLayoutConstraint.activate(previewCons)
+        //NSLayoutConstraint.activate(previewCons)
         
         // Copy button
         
@@ -202,15 +210,26 @@ class homeVC: UIViewController, UITextViewDelegate {
         copyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         copyButton.setTitle("COPY CAPTION", for: .normal)
         copyButton.layer.cornerRadius = 15
+        //copyButton.layer.borderWidth = 2.5
+        //copyButton.layer.borderColor = Colors.igPink!.cgColor
+        copyButton.clipsToBounds = true
         copyButton.tintColor = UIColor.white
         copyButton.backgroundColor = Colors.igPink
+        copyButton.setTitleColor(UIColor.white, for: .normal)
         
         let copyCons = [
             copyButton.topAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 40),
-            copyButton.leftAnchor.constraint(equalTo: previewButton.rightAnchor, constant: 5),
-            copyButton.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -85),
-            copyButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 80),
+            copyButton.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 40),
+            copyButton.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -40),
+            copyButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
         ]
+        
+        /*let copyCons = [
+            copyButton.topAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 40),
+            copyButton.leftAnchor.constraint(equalTo: previewButton.rightAnchor, constant: 5),
+            copyButton.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -95),
+            copyButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
+        ]*/
         
         self.view.addSubview(copyButton)
         
@@ -224,20 +243,20 @@ class homeVC: UIViewController, UITextViewDelegate {
         shareButton.backgroundColor = UIColor.white
         shareButton.layer.cornerRadius = 15
         shareButton.layer.borderWidth = 2.5
-        shareButton.layer.borderColor = Colors.lightGray.cgColor
+        shareButton.layer.borderColor = Colors.igPink!.cgColor
         shareButton.clipsToBounds = true
-        shareButton.tintColor = Colors.gray
+        shareButton.tintColor = Colors.igPink
         
         let shareCons = [
             shareButton.topAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 40),
             shareButton.leftAnchor.constraint(equalTo: copyButton.rightAnchor, constant: 5),
-            shareButton.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -40),
-            shareButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 80)
+            shareButton.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -45),
+            shareButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
         ]
         
-        self.view.addSubview(shareButton)
+        //self.view.addSubview(shareButton)
         
-        NSLayoutConstraint.activate(shareCons)
+        //NSLayoutConstraint.activate(shareCons)
         
         // Gradient background for copy button WIP
         /*
@@ -457,6 +476,28 @@ class homeVC: UIViewController, UITextViewDelegate {
     
     @objc func closeKeyboard(_ sender: UIButton) {
         self.view.endEditing(true)
+    }
+    
+    @objc func saveCaption() {
+        
+        /*guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Caption", in: managedContext)!
+        
+        let caption = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        caption.setValue(c.toNSData(), forKey: "attributedText")
+        
+        do {
+            try managedContext.save()
+            captions.append(caption)
+        } catch let error as NSError {
+            print("Could not save data. \(error), \(error.userInfo)")
+        }*/
+        
+        draftsVC.sharedInstance.saveCaption(captionIn.attributedText)
     }
     
 }
