@@ -478,26 +478,20 @@ class homeVC: UIViewController, UITextViewDelegate {
         self.view.endEditing(true)
     }
     
+    // Save caption to drafts
+    
     @objc func saveCaption() {
         
-        /*guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "Caption", in: managedContext)!
-        
-        let caption = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        caption.setValue(c.toNSData(), forKey: "attributedText")
-        
-        do {
-            try managedContext.save()
-            captions.append(caption)
-        } catch let error as NSError {
-            print("Could not save data. \(error), \(error.userInfo)")
-        }*/
+        // Save caption to drafts
         
         draftsVC.sharedInstance.saveCaption(captionIn.attributedText)
+        
+        // Send alert to the user
+        
+        let savedAlert = UIAlertController(title: "Caption Saved", message: "Your caption has been saved to your drafts", preferredStyle: .alert)
+        let okay = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        savedAlert.addAction(okay)
+        self.present(savedAlert, animated: true, completion: nil)
     }
     
 }

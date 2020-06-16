@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		F1AC9FD92493E1810068EEA1 /* Captions.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FD72493E1810068EEA1 /* Captions.xcdatamodeld */; };
 		F1AC9FDB249424800068EEA1 /* draftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FDA249424800068EEA1 /* draftCell.swift */; };
+		F1AC9FDD2497F1B30068EEA1 /* hashtagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FDC2497F1B30068EEA1 /* hashtagCell.swift */; };
+		F1AC9FDF2497F1F10068EEA1 /* hashtagEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FDE2497F1F10068EEA1 /* hashtagEditor.swift */; };
+		F1AC9FE1249808D10068EEA1 /* Hashtags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FE0249808D10068EEA1 /* Hashtags.swift */; };
 		F1F07FA624912105001DEA9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F07FA524912105001DEA9B /* AppDelegate.swift */; };
 		F1F07FA824912105001DEA9B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F07FA724912105001DEA9B /* SceneDelegate.swift */; };
 		F1F07FAD24912105001DEA9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F07FAB24912105001DEA9B /* Main.storyboard */; };
@@ -50,6 +53,9 @@
 /* Begin PBXFileReference section */
 		F1AC9FD82493E1810068EEA1 /* Captions.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Captions.xcdatamodel; sourceTree = "<group>"; };
 		F1AC9FDA249424800068EEA1 /* draftCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = draftCell.swift; sourceTree = "<group>"; };
+		F1AC9FDC2497F1B30068EEA1 /* hashtagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hashtagCell.swift; sourceTree = "<group>"; };
+		F1AC9FDE2497F1F10068EEA1 /* hashtagEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hashtagEditor.swift; sourceTree = "<group>"; };
+		F1AC9FE0249808D10068EEA1 /* Hashtags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hashtags.swift; sourceTree = "<group>"; };
 		F1F07FA224912105001DEA9B /* captionBreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = captionBreak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1F07FA524912105001DEA9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F07FA724912105001DEA9B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,11 +139,11 @@
 		F1F07FA424912105001DEA9B /* captionBreak */ = {
 			isa = PBXGroup;
 			children = (
-				F1FA337F2492E6C9000466B9 /* Hashtags */,
 				F1FA33782492B4F1000466B9 /* Custom Elements */,
 				F1FA337324926DBD000466B9 /* colors */,
 				F111E08B249267BB00FD21C4 /* keyboard */,
 				F1F07FE0249185A3001DEA9B /* preview */,
+				F1FA337F2492E6C9000466B9 /* Hashtags */,
 				F1F07FD62491354E001DEA9B /* drafts */,
 				F1F07FD524913546001DEA9B /* home */,
 				F1F07FA524912105001DEA9B /* AppDelegate.swift */,
@@ -219,6 +225,9 @@
 			isa = PBXGroup;
 			children = (
 				F1FA33802492E6DD000466B9 /* hashtagsVC.swift */,
+				F1AC9FDC2497F1B30068EEA1 /* hashtagCell.swift */,
+				F1AC9FDE2497F1F10068EEA1 /* hashtagEditor.swift */,
+				F1AC9FE0249808D10068EEA1 /* Hashtags.swift */,
 			);
 			path = Hashtags;
 			sourceTree = "<group>";
@@ -355,14 +364,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1F07FE224918604001DEA9B /* previewVC.swift in Sources */,
+				F1AC9FE1249808D10068EEA1 /* Hashtags.swift in Sources */,
 				F1FA337C2492E33E000466B9 /* LightNavigationController.swift in Sources */,
 				F1FA337E2492E6C0000466B9 /* draftsVC.swift in Sources */,
+				F1AC9FDF2497F1F10068EEA1 /* hashtagEditor.swift in Sources */,
 				F1FA337A2492B508000466B9 /* GradientButton.swift in Sources */,
 				F1FA337524926DD0000466B9 /* Colors.swift in Sources */,
 				F1F07FE42491861A001DEA9B /* previewView.swift in Sources */,
 				F1F07FDF24913DA4001DEA9B /* textEditBar.swift in Sources */,
 				F1FA337724928A17000466B9 /* Theme.swift in Sources */,
 				F1F07FD824913752001DEA9B /* homeVC.swift in Sources */,
+				F1AC9FDD2497F1B30068EEA1 /* hashtagCell.swift in Sources */,
 				F1FA33812492E6DD000466B9 /* hashtagsVC.swift in Sources */,
 				F1F07FA624912105001DEA9B /* AppDelegate.swift in Sources */,
 				F1AC9FDB249424800068EEA1 /* draftCell.swift in Sources */,

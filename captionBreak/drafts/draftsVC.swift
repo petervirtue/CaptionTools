@@ -32,9 +32,6 @@ class draftsVC: UITableViewController {
         self.tableView.register(draftCell.self, forCellReuseIdentifier: "draftCell")
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        //self.tableView.allowsSelection = true
-        //self.tableView.setEditing(true, animated: false)
-        //self.tableView.allowsMultipleSelection = false
 
         // Setup
         

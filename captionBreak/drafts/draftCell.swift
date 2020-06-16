@@ -33,7 +33,7 @@ class draftCell: UITableViewCell {
         textView.backgroundColor = .white
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.layer.cornerRadius = 5
-        textView.contentInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        textView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         //textView.textContainer.maximumNumberOfLines = 6

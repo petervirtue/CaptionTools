@@ -3,7 +3,11 @@
     <entity name="Caption" representedClassName="Caption" syncable="YES" codeGenerationType="class">
         <attribute name="attributedText" optional="YES" attributeType="Binary"/>
     </entity>
+    <entity name="HashtagGroup" representedClassName="HashtagGroup" syncable="YES" codeGenerationType="class">
+        <attribute name="tags" optional="YES" attributeType="Transformable"/>
+    </entity>
     <elements>
         <element name="Caption" positionX="-63" positionY="-18" width="128" height="58"/>
+        <element name="HashtagGroup" positionX="-54" positionY="0" width="128" height="58"/>
     </elements>
 </model>
