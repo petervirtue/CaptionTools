@@ -8,11 +8,11 @@
 
 import UIKit
 
-enum typeStyle {
-    case normal, bold, italic
-}
+
 
 class textEditBar: UIView {
+    
+    // Components
     
     var normal: UIButton!
     var bold: UIButton!

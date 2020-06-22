@@ -54,7 +54,7 @@ class draftsVC: UITableViewController {
         // Table view styling
         
         self.tableView.separatorStyle = .none
-        self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         
         // Navigation Controller
         
@@ -69,7 +69,7 @@ class draftsVC: UITableViewController {
         
         // Settings and Editing button
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: nil)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(openSettings))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(setTVEditing))
         
     }
@@ -77,7 +77,7 @@ class draftsVC: UITableViewController {
     // Cell Height
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 105
+        return 115
     }
     
     // Creating each cell
@@ -96,6 +96,7 @@ class draftsVC: UITableViewController {
         // Set data and return
         
         cell.textView.attributedText = t
+        cell.label.text = String(indexPath.row + 1)
         
         return cell
     }
@@ -112,6 +113,11 @@ class draftsVC: UITableViewController {
             
             let caption = captions[indexPath.row]
             
+            // Feedback
+            
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+            
             // Remove the caption from the captions array, Core Data, and the TableView
             
             captions.remove(at: indexPath.row)
@@ -123,6 +129,11 @@ class draftsVC: UITableViewController {
     // Cell selection
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         
         // Send caption to the editor
         
@@ -166,7 +177,7 @@ class draftsVC: UITableViewController {
             captions.append(caption)
             tableView.reloadData()
         } catch let error as NSError {
-            print("Could not save data. \(error), \(error.userInfo)")
+            print("Could not save data. \(error), \(error.userInfo)") 
         }
     }
     
@@ -219,6 +230,11 @@ class draftsVC: UITableViewController {
         
         homeVC.sharedInstance.captionIn.attributedText = s
         
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
         // Send to that view controller
         
         self.tabBarController?.selectedIndex = 1
@@ -231,9 +247,15 @@ class draftsVC: UITableViewController {
         let d = caption.value(forKey: "attributedText") as? NSData
         let s = d?.toAttributedString()
         
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
         // Send to the home view controller
         
         homeVC.sharedInstance.captionIn.attributedText = s
+        homeVC.sharedInstance.updateCounts(homeVC.sharedInstance.captionIn)
         
         // Go to the VC
         
@@ -249,6 +271,26 @@ class draftsVC: UITableViewController {
         } else {
             self.tableView.setEditing(true, animated: true)
         }
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+    }
+    
+    // Open settings
+    
+    @objc func openSettings() {
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        // Create and present vc
+        
+        let settings = settingsVC()
+        present(settings, animated: true, completion: nil)
     }
 
 }

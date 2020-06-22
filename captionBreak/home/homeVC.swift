@@ -8,8 +8,13 @@
 
 import UIKit
 import Foundation
+import StoreKit
 
 class homeVC: UIViewController, UITextViewDelegate {
+    
+    let boldChars = ["0":"𝟬","1":"𝟭","2":"𝟮","3":"𝟯","4":"𝟰","5":"𝟱","6":"𝟲","7":"𝟳","8":"𝟴","9":"𝟵","a":"𝗮","b":"𝗯","c":"𝗰","d":"𝗱","e":"𝗲","f":"𝗳","g":"𝗴","h":"𝗵","i":"𝗶","j":"𝗷","k":"𝗸","l":"𝗹","m":"𝗺","n":"𝗻","o":"𝗼","p":"𝗽","q":"𝗾","r":"𝗿","s":"𝘀","t":"𝘁","u":"𝘂","v":"𝘃","w":"𝘄","x":"𝘅","y":"𝘆","z":"𝘇","A":"𝗔","B":"𝗕","C":"𝗖","D":"𝗗","E":"𝗘","F":"𝗙","G":"𝗚","H":"𝗛","I":"𝗜","J":"𝗝","K":"𝗞","L":"𝗟","M":"𝗠","N":"𝗡","O":"𝗢","P":"𝗣","Q":"𝗤","R":"𝗥","S":"𝗦","T":"𝗧","U":"𝗨","V":"𝗩","W":"𝗪","X":"𝗫","Y":"𝗬","Z":"𝗭"]
+    
+    let italicChars = ["0":"0","1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","a":"𝘢","b":"𝘣","c":"𝘤","d":"𝘥","e":"𝘦","f":"𝘧","g":"𝘨","h":"𝘩","i":"𝘪","j":"𝘫","k":"𝘬","l":"𝘭","m":"𝘮","n":"𝘯","o":"𝘰","p":"𝘱","q":"𝘲","r":"𝘳","s":"𝘴","t":"𝘵","u":"𝘶","v":"𝘷","w":"𝘸","x":"𝘹","y":"𝘺","z":"𝘻","A":"𝘈","B":"𝘉","C":"𝘊","D":"𝘋","E":"𝘌","F":"𝘍","G":"𝘎","H":"𝘏","I":"𝘐","J":"𝘑","K":"𝘒","L":"𝘓","M":"𝘔","N":"𝘕","O":"𝘖","P":"𝘗","Q":"𝘘","R":"𝘙","S":"𝘚","T":"𝘛","U":"𝘜","V":"𝘝","W":"𝘞","X":"𝘟","Y":"𝘠","Z":"𝘡"]
     
     // Shared instance
     
@@ -23,7 +28,9 @@ class homeVC: UIViewController, UITextViewDelegate {
     @objc var copyButton: UIButton!
     var toolbar: textEditBar!
     var charactersUsed: UILabel!
+    var charactersImage: UIImageView!
     var hashtagsUsed: UILabel!
+    var hashtagsImage: UIImageView!
     var bottomPlate: UIView!
     //var gradient: UIView!
     //var gradLayer: CAGradientLayer!
@@ -35,6 +42,8 @@ class homeVC: UIViewController, UITextViewDelegate {
     // Editing status
     
     var typeStatus: typeStyle!
+    
+    var typingStatus = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,16 +67,22 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         /*
         FUNCTIONALITY TO ADD
-        - Line Breaks
-        - Bold/Italic Support
-        - Hashtag groupings
-        - Save drafts
+        - Test all different devices
+        - Clean up all classes and code
         */
+        
+        // TESTING
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateCounts(captionIn)
     }
     
     func setup() {
@@ -96,7 +111,7 @@ class homeVC: UIViewController, UITextViewDelegate {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"), style: .plain, target: self, action: #selector(saveCaption))
         
         // Share Button and Previe Button
-        self.navigationItem.leftBarButtonItems = [UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareText)), UIBarButtonItem(image: UIImage(systemName: "person.crop.square.fill"), style: .plain, target: self, action: #selector(showPreview))]
+        self.navigationItem.leftBarButtonItems = [UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareText)), UIBarButtonItem(image: UIImage(systemName: "person.crop.square"), style: .plain, target: self, action: #selector(showPreview))]
         
         // Tab bar controller
         
@@ -108,39 +123,98 @@ class homeVC: UIViewController, UITextViewDelegate {
         self.tabBarController?.tabBar.unselectedItemTintColor = Colors.gray
         self.tabBarController?.tabBar.shadowImage = UIImage()
         self.tabBarController?.tabBar.backgroundImage = UIImage()
+        
+        // Character Image
+        
+        charactersImage = UIImageView(frame: .zero)
+        charactersImage.image = UIImage(systemName: "t.square")
+        charactersImage.translatesAutoresizingMaskIntoConstraints = false
+        charactersImage.tintColor = UIColor.black
+        charactersImage.contentMode = .scaleAspectFill
+        
+        let countImageCons = [
+            charactersImage.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 25),
+            charactersImage.rightAnchor.constraint(equalTo: l.leftAnchor, constant: 35),
+            charactersImage.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
+            charactersImage.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 30)
+        ]
+        
+        self.view.addSubview(charactersImage)
+        
+        NSLayoutConstraint.activate(countImageCons)
 
         
         // Character count
     
         charactersUsed = UILabel(frame: .zero)
         charactersUsed.translatesAutoresizingMaskIntoConstraints = false
-        charactersUsed.textAlignment = .right
+        charactersUsed.textAlignment = .left
         charactersUsed.font = UIFont.systemFont(ofSize: 10)
         charactersUsed.textColor = UIColor.black
         charactersUsed.text = "0 / 2200"
         
         let countCons = [
-            charactersUsed.leftAnchor.constraint(equalTo: l.centerXAnchor),
-            charactersUsed.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -20),
-            charactersUsed.topAnchor.constraint(equalTo: l.topAnchor, constant: 10),
-            charactersUsed.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 20)
+            charactersUsed.leftAnchor.constraint(equalTo: charactersImage.rightAnchor, constant: 5),
+            charactersUsed.rightAnchor.constraint(equalTo: charactersImage.rightAnchor, constant: 70),
+            charactersUsed.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
+            charactersUsed.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 30)
         ]
         
         self.view.addSubview(charactersUsed)
         
         NSLayoutConstraint.activate(countCons)
         
+        // Hashtag Image
+        
+        hashtagsImage = UIImageView(frame: .zero)
+        hashtagsImage.image = UIImage(systemName: "number.square")
+        hashtagsImage.translatesAutoresizingMaskIntoConstraints = false
+        hashtagsImage.tintColor = UIColor.black
+        hashtagsImage.contentMode = .scaleAspectFill
+        
+        let hashtagImageCons = [
+            hashtagsImage.leftAnchor.constraint(equalTo: charactersUsed.rightAnchor, constant: 5),
+            hashtagsImage.rightAnchor.constraint(equalTo: charactersUsed.rightAnchor, constant: 15),
+            hashtagsImage.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
+            hashtagsImage.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 30)
+        ]
+        
+        self.view.addSubview(hashtagsImage)
+        
+        NSLayoutConstraint.activate(hashtagImageCons)
+        
+        // Hashtag count
+        
+        hashtagsUsed = UILabel(frame: .zero)
+        hashtagsUsed.translatesAutoresizingMaskIntoConstraints = false
+        hashtagsUsed.textAlignment = .left
+        hashtagsUsed.font = UIFont.systemFont(ofSize: 10)
+        hashtagsUsed.textColor = UIColor.black
+        hashtagsUsed.text = "0 / 30"
+            
+        let hashtagCons = [
+            hashtagsUsed.leftAnchor.constraint(equalTo: hashtagsImage.rightAnchor, constant: 5),
+            hashtagsUsed.rightAnchor.constraint(equalTo: l.centerXAnchor),
+            hashtagsUsed.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
+            hashtagsUsed.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 30)
+        ]
+            
+        self.view.addSubview(hashtagsUsed)
+            
+        NSLayoutConstraint.activate(hashtagCons)
+        
         // captionIn
         
         captionIn = UITextView(frame: .zero)
         captionIn.translatesAutoresizingMaskIntoConstraints = false
         captionIn.backgroundColor = Colors.lightGray
-        captionIn.font = UIFont(name: "Helvetica Neue", size: 16)//UIFont.systemFont(ofSize: 16)
+        captionIn.font = UIFont.systemFont(ofSize: 16)//UIFont(name: "Helvetica Neue", size: 16)//
         captionIn.textColor = UIColor.lightGray
         captionIn.text = "Start caption here..."
+        captionIn.autocapitalizationType = .none
         
         let captionInCons = [
-            captionIn.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
+            captionIn.topAnchor.constraint(equalTo: l.topAnchor, constant: 30),
             captionIn.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 20),
             captionIn.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -20)
             //captionIn.bottomAnchor.constraintEqualToAnchor(l.bottomAnchor, constant: -110, id: "cib")
@@ -180,29 +254,6 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         NSLayoutConstraint.activate(bottomPlateCons)
         
-        // Preview button
-        
-        previewButton = UIButton(frame: .zero)
-        previewButton.translatesAutoresizingMaskIntoConstraints = false
-        previewButton.setImage(UIImage(systemName: "person.crop.square.fill"), for: .normal)
-        previewButton.backgroundColor = UIColor.white
-        previewButton.layer.cornerRadius = 15
-        previewButton.layer.borderWidth = 2.5
-        previewButton.layer.borderColor = Colors.igPink!.cgColor
-        previewButton.clipsToBounds = true
-        previewButton.tintColor = Colors.igPink
-        
-        let previewCons = [
-            previewButton.topAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 40),
-            previewButton.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 45),
-            previewButton.rightAnchor.constraint(equalTo: l.leftAnchor, constant: 90),
-            previewButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
-        ]
-        
-        //self.view.addSubview(previewButton)
-        
-        //NSLayoutConstraint.activate(previewCons)
-        
         // Copy button
         
         copyButton = UIButton()//(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 170, height: 50))
@@ -224,89 +275,18 @@ class homeVC: UIViewController, UITextViewDelegate {
             copyButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
         ]
         
-        /*let copyCons = [
-            copyButton.topAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 40),
-            copyButton.leftAnchor.constraint(equalTo: previewButton.rightAnchor, constant: 5),
-            copyButton.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -95),
-            copyButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
-        ]*/
-        
         self.view.addSubview(copyButton)
         
         NSLayoutConstraint.activate(copyCons)
         
-        // Share button
-        
-        shareButton = UIButton(frame: .zero)
-        shareButton.translatesAutoresizingMaskIntoConstraints = false
-        shareButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-        shareButton.backgroundColor = UIColor.white
-        shareButton.layer.cornerRadius = 15
-        shareButton.layer.borderWidth = 2.5
-        shareButton.layer.borderColor = Colors.igPink!.cgColor
-        shareButton.clipsToBounds = true
-        shareButton.tintColor = Colors.igPink
-        
-        let shareCons = [
-            shareButton.topAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 40),
-            shareButton.leftAnchor.constraint(equalTo: copyButton.rightAnchor, constant: 5),
-            shareButton.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -45),
-            shareButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
-        ]
-        
-        //self.view.addSubview(shareButton)
-        
-        //NSLayoutConstraint.activate(shareCons)
-        
-        // Gradient background for copy button WIP
-        /*
-        
-        gradient = UIView()
-        gradient.translatesAutoresizingMaskIntoConstraints = false
-        gradient.layer.cornerRadius = 10
-        //gradient.backgroundColor = UIColor.blue
-
-        let gradCons = [
-            gradient.topAnchor.constraint(equalTo: captionIn.bottomAnchor),
-            gradient.leftAnchor.constraint(equalTo: shareButton.rightAnchor, constant: 5),
-            gradient.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -20),
-            gradient.bottomAnchor.constraint(equalTo: captionIn.bottomAnchor, constant: 50),
-            gradient.widthAnchor.constraint(equalTo: l.widthAnchor, constant: -170),
-            gradient.heightAnchor.constraint(equalToConstant: 50)
-        ]
-        
-        self.view.addSubview(gradient)
-        
-        NSLayoutConstraint.activate(gradCons
-        
-        // Gradient layer
-        gradLayer = CAGradientLayer()
-        gradLayer.colors = [UIColor.blue, UIColor.black]//[Colors.igBlue, Colors.igBlueTwo, Colors.igPurple, Colors.igPink, Colors.igPinkTwo, Colors.igRed, Colors.igOrange, Colors.igOrangeTwo, Colors.igYellow, Colors.igYellowTwo]
-        //gradLayer.locations = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-        gradLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradLayer.frame = gradient.frame
-        
-        gradient.layer.insertSublayer(gradLayer, at: 0)
-        */
-        
-        
-        
         // Button targets
         
         copyButton.addTarget(self, action: #selector(copyToClipboard), for: .touchUpInside)
-        shareButton.addTarget(self, action: #selector(shareText), for: .touchUpInside)
-        previewButton.addTarget(self, action: #selector(showPreview), for: .touchUpInside)
         toolbar.normal.addTarget(self, action: #selector(setNormal), for: .touchUpInside)
         toolbar.bold.addTarget(self, action: #selector(setBold), for: .touchUpInside)
         toolbar.italic.addTarget(self, action: #selector(setItalic), for: .touchUpInside)
         toolbar.clear.addTarget(self, action: #selector(clearText), for: .touchUpInside)
-        
-        /*home.translatesAutoresizingMaskIntoConstraints = false
-        home.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 0).isActive = true
-        home.rightAnchor.constraint(equalTo: l.rightAnchor, constant: 0).isActive = true
-        home.topAnchor.constraint(equalTo: l.topAnchor, constant: 0).isActive = true
-        home.bottomAnchor.constraint(equalTo: l.bottomAnchor, constant: 0).isActive = true*/
+        toolbar.hashtags.addTarget(self, action: #selector(presentHashtags), for: .touchUpInside)
     }
     
     // Show preview
@@ -314,12 +294,21 @@ class homeVC: UIViewController, UITextViewDelegate {
     @objc func showPreview(_ sender: UIButton) {
         
         // Get text
+        
         let mas = NSMutableAttributedString(attributedString: captionIn.attributedText)
-        print(mas)
         
         // Setup view controller
+        
         let pvc = previewVC()
         pvc.mas = mas
+        
+        // Feedback
+        
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        // Present
+        
         self.present(pvc, animated: true, completion: nil)
     }
     
@@ -328,26 +317,48 @@ class homeVC: UIViewController, UITextViewDelegate {
     @objc func shareText(_ sender: UIButton) {
         
         // Get text
+        
         let text = captionIn.text
         
+        
+        // Share VC
+        
         let share = [text]
-        let ac = UIActivityViewController(activityItems: share, applicationActivities: nil)
+        let ac = UIActivityViewController(activityItems: share as [Any], applicationActivities: nil)
+        
+        // Feedback
+        
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        // Present
+        
         self.present(ac, animated: true, completion: nil)
     }
     
     // Copy to clipboard
     
     @objc func copyToClipboard(_ sender: UIButton) {
+        
         // Set the text
+        
         UIPasteboard.general.set(attributedString: captionIn.attributedText)
         
         // Original text
+        
         let original = sender.title(for: .normal)
         
         // Change the button text
+        
         sender.setTitle("Copied!", for: .normal)
         
+        // Feedback
+        
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+        
         // Change it back
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             sender.setTitle(original, for: .normal)
         }
@@ -357,18 +368,34 @@ class homeVC: UIViewController, UITextViewDelegate {
     
     @objc func setNormal(_ sender: UIButton) {
         
-        // Set text kind
+        // Attributes
+        
         let attrs: [NSAttributedString.Key : Any] = [
             .font : UIFont.systemFont(ofSize: 16)
         ]
         
+        // Set selected text to normal
+        
+        let range = captionIn.selectedRange
+        let toChange = NSMutableAttributedString(attributedString: captionIn.attributedText)
+        toChange.addAttributes(attrs, range: range)
+        captionIn.attributedText = toChange
+        captionIn.selectedRange = range
+        
+        // Set text kind
+        
         captionIn.typingAttributes = attrs
+        typingStatus = 0
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         
         // Edit the buttons
+        
         toolbar.bold.tintColor = Colors.gray
         toolbar.italic.tintColor = Colors.gray
-        toolbar.hashtags.tintColor = Colors.gray
-        toolbar.keyboardDown.tintColor = Colors.gray
         toolbar.normal.tintColor = .black
     }
     
@@ -376,18 +403,19 @@ class homeVC: UIViewController, UITextViewDelegate {
     
     @objc func setBold(_ sender: UIButton) {
         
-        // Set text kind
-        let attrs: [NSAttributedString.Key : Any] = [
-            .font : UIFont.boldSystemFont(ofSize: 16)
-        ]
+        // Set typing attributes
         
-        captionIn.typingAttributes = attrs
+        typingStatus = 1
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         
         // Edit the buttons
+        
         toolbar.bold.tintColor = .black
         toolbar.italic.tintColor = Colors.gray
-        toolbar.hashtags.tintColor = Colors.gray
-        toolbar.keyboardDown.tintColor = Colors.gray
         toolbar.normal.tintColor = Colors.gray
         
     }
@@ -397,22 +425,31 @@ class homeVC: UIViewController, UITextViewDelegate {
     @objc func setItalic(_ sender: UIButton) {
         
         // Set text kind
-        let attrs: [NSAttributedString.Key : Any] = [
-            .font : UIFont.italicSystemFont(ofSize: 16)
-        ]
         
-        captionIn.typingAttributes = attrs
+        typingStatus = 2
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         
         // Edit the buttons
         toolbar.bold.tintColor = Colors.gray
         toolbar.italic.tintColor = .black
-        toolbar.hashtags.tintColor = Colors.gray
-        toolbar.keyboardDown.tintColor = Colors.gray
         toolbar.normal.tintColor = Colors.gray
     }
     
     @objc func clearText(_ sender: UIButton) {
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        // Clear text
+        
         captionIn.text = ""
+        updateCounts(captionIn)
     }
     
     // Placeholder removal
@@ -424,6 +461,11 @@ class homeVC: UIViewController, UITextViewDelegate {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = UIColor.black
+            
+            // Feedback
+
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
         }
         
         // TextView Constraints
@@ -458,23 +500,41 @@ class homeVC: UIViewController, UITextViewDelegate {
     // Character count
     
     func textViewDidChange(_ textView: UITextView) {
-        let chars = textView.text.count
-        charactersUsed.text = String(chars) + " / 2200"
+        updateCounts(textView)
     }
     
     // Instagram caption spacing requires a space before every new line
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.insertText(" \n")
+            return false
+        } else if typingStatus == 1 && boldChars.keys.contains(text) {
+            textView.insertText(self.boldChars[text]!)
+            return false
+        } else if typingStatus == 2 && italicChars.keys.contains(text) {
+            textView.insertText(italicChars[text]!)
             return false
         }
         
         return true
     }
     
+    // Update toolbar status as the cursor moves NOTE - Might be too taxing so testing needs to be done
+    
+    
+    
     // Close the keyboard
     
     @objc func closeKeyboard(_ sender: UIButton) {
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        // Close keyboard
+        
         self.view.endEditing(true)
     }
     
@@ -482,16 +542,149 @@ class homeVC: UIViewController, UITextViewDelegate {
     
     @objc func saveCaption() {
         
-        // Save caption to drafts
+        // Dont let a caption be saved if it is the placeholder text
         
-        draftsVC.sharedInstance.saveCaption(captionIn.attributedText)
+        if captionIn.textColor == UIColor.lightGray {
+            
+            // Error VC
+            
+            let noCaptionAlert = UIAlertController(title: "Error", message: "You cannot save an empty caption, please enter one", preferredStyle: .alert)
+            let okay = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+            noCaptionAlert.addAction(okay)
+            
+            // Feedback
+            
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.warning)
+
+            // Present
+            
+            self.present(noCaptionAlert, animated: true, completion: nil)
+            
+        } else {
+            
+            // Ratings push
+            let amountSaved = UserDefaults.standard.integer(forKey: "saved")
+            
+            if amountSaved == 3 || amountSaved == 9 || amountSaved == 18 {
+                SKStoreReviewController.requestReview()
+            } else {
+                UserDefaults.standard.set(amountSaved + 1, forKey: "saved")
+            }
+            
+            // Save caption to drafts
+            
+            draftsVC.sharedInstance.saveCaption(captionIn.attributedText)
+            
+            // Send alert to the user
+            
+            let savedAlert = UIAlertController(title: "Caption Saved", message: "Your caption has been saved to your drafts", preferredStyle: .alert)
+            let okay = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+            savedAlert.addAction(okay)
+            
+            // Feedback
+            
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+
+            
+            // Present
+            
+            self.present(savedAlert, animated: true, completion: nil)
+        }
+    }
+    
+    // Present hashtags VC
+    
+    @objc func presentHashtags() {
         
-        // Send alert to the user
+        // Create VC
         
-        let savedAlert = UIAlertController(title: "Caption Saved", message: "Your caption has been saved to your drafts", preferredStyle: .alert)
-        let okay = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
-        savedAlert.addAction(okay)
-        self.present(savedAlert, animated: true, completion: nil)
+        let addHashtags = addHashtagsVC()
+        
+        if hashtagsVC.sharedInstance.hashtags.isEmpty {
+            hashtagsVC.sharedInstance.loadData()
+        }
+        addHashtags.hashtags = hashtagsVC.sharedInstance.hashtags
+        addHashtags.tableView.reloadData()
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        // Present
+        
+        self.present(addHashtags, animated: true, completion: nil)
+    }
+    
+    // Add hashtags to the caption
+    
+    func addHashtagsToText(_ tags: [NSAttributedString]) {
+        
+        // Set up Mutable
+        
+        let combo = NSMutableAttributedString()
+        let previousText = captionIn.attributedText!
+        let attrs: [NSAttributedString.Key : Any] = [
+            .font : UIFont.systemFont(ofSize: 16)
+        ]
+        combo.append(previousText)
+        combo.append(NSAttributedString(string: " \n \n", attributes: attrs))
+        
+        for i in 1..<tags.count {
+            combo.append(NSAttributedString(string: "#", attributes: attrs))
+            combo.append(NSAttributedString(string: tags[i].string, attributes: attrs))
+            combo.append(NSAttributedString(string: " ", attributes: attrs))
+        }
+        
+        // Feedback
+        
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+
+        //let generator = UIImpactFeedbackGenerator(style: .light)
+        //generator.impactOccurred()
+        
+        // Update caption
+        
+        captionIn.attributedText = combo
+        
+        updateCounts(captionIn)
+    }
+    
+    // Update characters and hashtags count
+    
+    func updateCounts(_ textView: UITextView) {
+        
+        if textView.textColor == UIColor.lightGray {
+            charactersUsed.text = "0 / 2200"
+            hashtagsUsed.text = "0 / 30"
+            return
+        }
+        let chars = textView.text.count
+        var tags = textView.text.amountOfHashtags()
+        if tags != 0 {
+            tags += 1
+        }
+        charactersUsed.text = String(chars) + " / 2200"
+        hashtagsUsed.text = String(tags) + " / 30"
+        
+        if chars > 2200 {
+            charactersUsed.textColor = .red
+            charactersImage.tintColor = .red
+        } else {
+            charactersUsed.textColor = .black
+            charactersImage.tintColor = .black
+        }
+        
+        if tags > 30 {
+            hashtagsUsed.textColor = .red
+            hashtagsImage.tintColor = .red
+        } else {
+            hashtagsUsed.textColor = .black
+            hashtagsImage.tintColor = .black
+        }
     }
     
 }

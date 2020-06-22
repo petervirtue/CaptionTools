@@ -20,11 +20,6 @@ class hashtagsVC: UITableViewController {
     // Hashtags
     
     var hashtags: [NSManagedObject] = []
-    var tags: [[NSAttributedString]] = []
-    
-    // Testing
-    
-    var testing = ["Testing", "hashtagone", "hashtagtwo", "hashtagthree", "hashtagfour", "hashtagfive", "hashtagsix"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +40,13 @@ class hashtagsVC: UITableViewController {
         setup()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Load data
+        loadData()
+    }
+    
     func setup() {
         
         // Background
@@ -54,7 +56,7 @@ class hashtagsVC: UITableViewController {
         // Table view styling
         
         self.tableView.separatorStyle = .none
-        self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         
         // Navigation Controller
         
@@ -69,16 +71,39 @@ class hashtagsVC: UITableViewController {
         
         // Add and Editing button
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.square"), style: .plain, target: self, action: nil)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.square"), style: .plain, target: self, action: #selector(openHashtagEditor))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(setTVEditing))
+    
         
-        // Setup
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        createTestHashtags()
+        // Deletion style
+        
+        if editingStyle == .delete {
+            
+            // Feedback
+            
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+            
+            // Delete the hashtag
+            
+            deleteHashtag(at: indexPath)
+            
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tags.count
+        
+        if hashtags.count == 0 {
+            tableView.setEmptyView(title: "No saved hashtags", sub: "Your hashtags will be in here")
+        } else {
+            tableView.restoreFromEmpty()
+        }
+        
+        return hashtags.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -91,41 +116,65 @@ class hashtagsVC: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "hashtagCell") as! hashtagCell
         
-        // Get the information from Core Data
+        // Getting data
         
-        for i in 0..<testing.count {
-            if i == 0 {
-                //cell.label.text = testing[i]
-            } else if i == testing.count - 1 {
-                //cell.textView.text.append("#" + testing[i])
-            } else {
-                //cell.textView.text.append("#" + testing[i] + ", ")
-            }
-        }
+        let data = hashtags[indexPath.row].value(forKey: "hashtags") as? NSData
         
-        for group in tags {
+        // Transitioning the data to the cell
+        
+        do {
+            let hashtag = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(Data(referencing: data!)) as! HashtagObject
+            let tags = hashtag.attributedStrings
             let tagsMutable = NSMutableAttributedString()
-            for i in 0..<group.count {
+            let attrs: [NSAttributedString.Key : Any] = [
+                .font : UIFont.systemFont(ofSize: 16)
+            ]
+            for i in 0..<tags.count {
+                let nsa = NSAttributedString(string: tags[i].string, attributes: attrs)
                 if i == 0 {
-                    cell.label.attributedText = group[i]
-                } else if i == testing.count - 1 {
-                    tagsMutable.append(NSAttributedString(string: "#"))
-                    tagsMutable.append(group[i])
-                    tagsMutable.append(NSAttributedString(string: ", "))
+                    cell.label.attributedText = tags[i]
+                } else if i == tags.count - 1 {
+                    tagsMutable.append(NSAttributedString(string: "#", attributes: attrs))
+                    tagsMutable.append(nsa)
                 } else {
-                    tagsMutable.append(NSAttributedString(string: "#"))
-                    tagsMutable.append(group[i])
+                    tagsMutable.append(NSAttributedString(string: "#", attributes: attrs))
+                    tagsMutable.append(nsa)
+                    tagsMutable.append(NSAttributedString(string: ", ", attributes: attrs))
                 }
             }
+            
             cell.textView.attributedText = tagsMutable
+            
+        } catch let error as NSError {
+            print("Error loading content into the cells. \n \(error)")
         }
         
         return cell
     }
     
+    // Cell selection
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        // Send caption to the editor
+        
+        sendHashtagsToEditor(index: indexPath.row)
+    }
+    
     // Set the TableView as editing
     
     @objc func setTVEditing() {
+        
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
         if self.tableView.isEditing {
             self.tableView.setEditing(false, animated: true)
         } else {
@@ -133,88 +182,155 @@ class hashtagsVC: UITableViewController {
         }
     }
     
-    func createHashtag() {
+    // Send already created group to editor
+    
+    func sendHashtagsToEditor(index: Int) {
+        
+        let editor = hashtagEditor()
+        editor.object = hashtags[index]
+        editor.index = index
+        present(editor, animated: true, completion: nil)
+    }
+    
+    // Save hashtags
+    
+    func saveHashtags(_ tags: [NSAttributedString]) {
         
         // Create appDelegate and managedContext
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        // Fetch request creation
+        // Entity cretion
         
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Caption")
+        let entity = NSEntityDescription.entity(forEntityName: "Hashtag", in: managedContext)!
         
-        // Try action
+        // hashtag as NSManagedObject creation
+        
+        let hashtag = NSManagedObject(entity: entity, insertInto: managedContext)
+        let tagObject = HashtagObject(attributedStrings: tags)
+        do {
+            let data: NSData = NSData(data: try NSKeyedArchiver.archivedData(withRootObject: tagObject, requiringSecureCoding: false))
+            hashtag.setValue(data, forKey: "hashtags")
+            
+            do {
+                try managedContext.save()
+                hashtags.append(hashtag)
+                tableView.reloadData()
+            } catch let error as NSError {
+                print("Could not save data. \n\(error), \(error.userInfo)")
+            }
+        } catch let error as NSError {
+            print("Error converting Hashtag object to data.\n\(error), \(error.userInfo)")
+        }
         
     }
     
-    func loadHashtags() {
+    // Save hashtags to a specific index
+    
+    func saveHashtagsToIndex(tags: [NSAttributedString], index: Int) {
         
         // Create appDelegate and managedContext
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        // Fetch request creation
+        // Entity cretion
         
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "HashtagGroup")
+        let entity = NSEntityDescription.entity(forEntityName: "Hashtag", in: managedContext)!
+        
+        // hashtag as NSManagedObject creation
+        
+        let hashtag = NSManagedObject(entity: entity, insertInto: managedContext)
+        let tagObject = HashtagObject(attributedStrings: tags)
+        do {
+            let data: NSData = NSData(data: try NSKeyedArchiver.archivedData(withRootObject: tagObject, requiringSecureCoding: false))
+            hashtag.setValue(data, forKey: "hashtags")
+            
+            do {
+                try managedContext.save()
+                hashtags.insert(hashtag, at: index)
+                tableView.reloadData()
+            } catch let error as NSError {
+                print("Could not save data. \n\(error), \(error.userInfo)")
+            }
+        } catch let error as NSError {
+            print("Error converting Hashtag object to data.\n\(error), \(error.userInfo)")
+        }
+    }
+    
+    // Remove hashtags
+    
+    func removeHashtags(_ hashtag: NSManagedObject) {
+        
+        // Create appDelegate and managedContext
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         // Try action
         
         do {
-            let result = try managedContext.fetch(fetchRequest)
-            
-            var i = 0
-            var j = 0
-            for data in result {
-                let ht = data.value(forKey: "hashtag") as! Hashtags
-                print("hashtag batch: \(i)")
-                for element in ht.hashtags {
-                    print("hashtag \(j): " + element.string)
-                    tags[i][j] = element
-                    j += 1
-                }
-                i += 1
-            }
-            
+            managedContext.delete(hashtag)
+            try managedContext.save()
+            //loadData()
+            //tableView.reloadData()
+        } catch let error as NSError {
+            print("Could not save data after deletion. \(error), \(error.userInfo)")
+        }
+    }
+    
+    // Load hashtags
+    
+    func loadData() {
+        // Create appDelegate and managedContext
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // Fetch request creation
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Hashtag")
+        
+        // Try action
+        
+        do {
+            hashtags = try managedContext.fetch(fetchRequest)
             self.tableView.reloadData()
         } catch let error as NSError {
-            print("Could not load data. \(error), \(error.userInfo)")
+            print("Error, could not save data. \n\(error), \(error.userInfo)")
         }
     }
     
-    func createTestHashtags() {
+    // Open the editor to create a new group
+    
+    @objc func openHashtagEditor() {
         
-        // Create appDelegate and managedContext
-               
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        // Feedback
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         
-        // Entity creation
+        // Present View controller
         
-        let entity = NSEntityDescription.entity(forEntityName: "HashtagGroup", in: managedContext)!
-        
-        var nstrings: [NSAttributedString] = []
-        
-        for s in testing {
-            let temp = NSAttributedString(string: s)
-            nstrings.append(temp)
-        }
-        
-        let hg = NSManagedObject(entity: entity, insertInto: managedContext)
-        let hastags = Hashtags(hashtags: nstrings)
-        hg.setValue(hastags, forKey: "tags")
-        
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Could not save data. \(error), \(error.userInfo)")
-        }
-        
+        let he = hashtagEditor()
+        self.present(he, animated: true, completion: nil)
     }
     
+    // Delete hashtag from vc
     
-    
-    
+    func deleteHashtag(at: IndexPath) {
+        
+        // Get hashtag
+        
+        let hashtag = hashtags[at.row]
+        
+        // Remove the caption from the captions array, Core Data, and the TableView
+        
+        hashtags.remove(at: at.row)
+        self.tableView.deleteRows(at: [at], with: .fade)
+        removeHashtags(hashtag)
+        
+    }
 
 }

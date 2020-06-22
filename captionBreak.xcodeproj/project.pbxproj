@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F110DF2F249AFA71008C13F0 /* addHashtagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F110DF2E249AFA71008C13F0 /* addHashtagsVC.swift */; };
+		F139FBFE249978D2005C12D0 /* editorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139FBFD249978D2005C12D0 /* editorCell.swift */; };
+		F139FC00249A8449005C12D0 /* hahstagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139FBFF249A8449005C12D0 /* hahstagTextField.swift */; };
 		F1AC9FD92493E1810068EEA1 /* Captions.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FD72493E1810068EEA1 /* Captions.xcdatamodeld */; };
 		F1AC9FDB249424800068EEA1 /* draftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FDA249424800068EEA1 /* draftCell.swift */; };
 		F1AC9FDD2497F1B30068EEA1 /* hashtagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FDC2497F1B30068EEA1 /* hashtagCell.swift */; };
 		F1AC9FDF2497F1F10068EEA1 /* hashtagEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FDE2497F1F10068EEA1 /* hashtagEditor.swift */; };
-		F1AC9FE1249808D10068EEA1 /* Hashtags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FE0249808D10068EEA1 /* Hashtags.swift */; };
+		F1AC9FE1249808D10068EEA1 /* HashtagObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FE0249808D10068EEA1 /* HashtagObject.swift */; };
 		F1F07FA624912105001DEA9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F07FA524912105001DEA9B /* AppDelegate.swift */; };
 		F1F07FA824912105001DEA9B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F07FA724912105001DEA9B /* SceneDelegate.swift */; };
 		F1F07FAD24912105001DEA9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F07FAB24912105001DEA9B /* Main.storyboard */; };
@@ -25,8 +28,8 @@
 		F1F07FE224918604001DEA9B /* previewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F07FE124918604001DEA9B /* previewVC.swift */; };
 		F1F07FE42491861A001DEA9B /* previewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F07FE32491861A001DEA9B /* previewView.swift */; };
 		F1F07FE6249196CC001DEA9B /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F07FE5249196CC001DEA9B /* extensions.swift */; };
+		F1F51263249D1764007BDEC1 /* settingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F51262249D1764007BDEC1 /* settingsVC.swift */; };
 		F1FA337524926DD0000466B9 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FA337424926DD0000466B9 /* Colors.swift */; };
-		F1FA337724928A17000466B9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FA337624928A17000466B9 /* Theme.swift */; };
 		F1FA337A2492B508000466B9 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FA33792492B508000466B9 /* GradientButton.swift */; };
 		F1FA337C2492E33E000466B9 /* LightNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FA337B2492E33E000466B9 /* LightNavigationController.swift */; };
 		F1FA337E2492E6C0000466B9 /* draftsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FA337D2492E6C0000466B9 /* draftsVC.swift */; };
@@ -51,12 +54,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F110DF2E249AFA71008C13F0 /* addHashtagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addHashtagsVC.swift; sourceTree = "<group>"; };
+		F139FBFD249978D2005C12D0 /* editorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorCell.swift; sourceTree = "<group>"; };
+		F139FBFF249A8449005C12D0 /* hahstagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hahstagTextField.swift; sourceTree = "<group>"; };
 		F1AC9FD82493E1810068EEA1 /* Captions.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Captions.xcdatamodel; sourceTree = "<group>"; };
 		F1AC9FDA249424800068EEA1 /* draftCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = draftCell.swift; sourceTree = "<group>"; };
 		F1AC9FDC2497F1B30068EEA1 /* hashtagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hashtagCell.swift; sourceTree = "<group>"; };
 		F1AC9FDE2497F1F10068EEA1 /* hashtagEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hashtagEditor.swift; sourceTree = "<group>"; };
-		F1AC9FE0249808D10068EEA1 /* Hashtags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hashtags.swift; sourceTree = "<group>"; };
-		F1F07FA224912105001DEA9B /* captionBreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = captionBreak.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1AC9FE0249808D10068EEA1 /* HashtagObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagObject.swift; sourceTree = "<group>"; };
+		F1F07FA224912105001DEA9B /* Caption Tools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Caption Tools.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1F07FA524912105001DEA9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1F07FA724912105001DEA9B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F1F07FAC24912105001DEA9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -75,8 +81,8 @@
 		F1F07FE124918604001DEA9B /* previewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = previewVC.swift; sourceTree = "<group>"; };
 		F1F07FE32491861A001DEA9B /* previewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = previewView.swift; sourceTree = "<group>"; };
 		F1F07FE5249196CC001DEA9B /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		F1F51262249D1764007BDEC1 /* settingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsVC.swift; sourceTree = "<group>"; };
 		F1FA337424926DD0000466B9 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		F1FA337624928A17000466B9 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		F1FA33792492B508000466B9 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		F1FA337B2492E33E000466B9 /* LightNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightNavigationController.swift; sourceTree = "<group>"; };
 		F1FA337D2492E6C0000466B9 /* draftsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = draftsVC.swift; sourceTree = "<group>"; };
@@ -129,7 +135,7 @@
 		F1F07FA324912105001DEA9B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F1F07FA224912105001DEA9B /* captionBreak.app */,
+				F1F07FA224912105001DEA9B /* Caption Tools.app */,
 				F1F07FB824912108001DEA9B /* captionBreakTests.xctest */,
 				F1F07FC324912108001DEA9B /* captionBreakUITests.xctest */,
 			);
@@ -139,6 +145,7 @@
 		F1F07FA424912105001DEA9B /* captionBreak */ = {
 			isa = PBXGroup;
 			children = (
+				F1F51261249D1747007BDEC1 /* Settings */,
 				F1FA33782492B4F1000466B9 /* Custom Elements */,
 				F1FA337324926DBD000466B9 /* colors */,
 				F111E08B249267BB00FD21C4 /* keyboard */,
@@ -182,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				F1F07FD724913752001DEA9B /* homeVC.swift */,
+				F110DF2E249AFA71008C13F0 /* addHashtagsVC.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -204,11 +212,28 @@
 			path = preview;
 			sourceTree = "<group>";
 		};
+		F1F51261249D1747007BDEC1 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F1F51262249D1764007BDEC1 /* settingsVC.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		F1F51266249D2ADE007BDEC1 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				F1AC9FDE2497F1F10068EEA1 /* hashtagEditor.swift */,
+				F139FBFD249978D2005C12D0 /* editorCell.swift */,
+				F139FBFF249A8449005C12D0 /* hahstagTextField.swift */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
 		F1FA337324926DBD000466B9 /* colors */ = {
 			isa = PBXGroup;
 			children = (
 				F1FA337424926DD0000466B9 /* Colors.swift */,
-				F1FA337624928A17000466B9 /* Theme.swift */,
 			);
 			path = colors;
 			sourceTree = "<group>";
@@ -224,10 +249,10 @@
 		F1FA337F2492E6C9000466B9 /* Hashtags */ = {
 			isa = PBXGroup;
 			children = (
+				F1F51266249D2ADE007BDEC1 /* Editor */,
 				F1FA33802492E6DD000466B9 /* hashtagsVC.swift */,
 				F1AC9FDC2497F1B30068EEA1 /* hashtagCell.swift */,
-				F1AC9FDE2497F1F10068EEA1 /* hashtagEditor.swift */,
-				F1AC9FE0249808D10068EEA1 /* Hashtags.swift */,
+				F1AC9FE0249808D10068EEA1 /* HashtagObject.swift */,
 			);
 			path = Hashtags;
 			sourceTree = "<group>";
@@ -249,7 +274,7 @@
 			);
 			name = captionBreak;
 			productName = captionBreak;
-			productReference = F1F07FA224912105001DEA9B /* captionBreak.app */;
+			productReference = F1F07FA224912105001DEA9B /* Caption Tools.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F1F07FB724912108001DEA9B /* captionBreakTests */ = {
@@ -364,19 +389,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1F07FE224918604001DEA9B /* previewVC.swift in Sources */,
-				F1AC9FE1249808D10068EEA1 /* Hashtags.swift in Sources */,
+				F1AC9FE1249808D10068EEA1 /* HashtagObject.swift in Sources */,
 				F1FA337C2492E33E000466B9 /* LightNavigationController.swift in Sources */,
+				F139FC00249A8449005C12D0 /* hahstagTextField.swift in Sources */,
 				F1FA337E2492E6C0000466B9 /* draftsVC.swift in Sources */,
+				F110DF2F249AFA71008C13F0 /* addHashtagsVC.swift in Sources */,
 				F1AC9FDF2497F1F10068EEA1 /* hashtagEditor.swift in Sources */,
 				F1FA337A2492B508000466B9 /* GradientButton.swift in Sources */,
 				F1FA337524926DD0000466B9 /* Colors.swift in Sources */,
 				F1F07FE42491861A001DEA9B /* previewView.swift in Sources */,
 				F1F07FDF24913DA4001DEA9B /* textEditBar.swift in Sources */,
-				F1FA337724928A17000466B9 /* Theme.swift in Sources */,
+				F139FBFE249978D2005C12D0 /* editorCell.swift in Sources */,
 				F1F07FD824913752001DEA9B /* homeVC.swift in Sources */,
 				F1AC9FDD2497F1B30068EEA1 /* hashtagCell.swift in Sources */,
 				F1FA33812492E6DD000466B9 /* hashtagsVC.swift in Sources */,
 				F1F07FA624912105001DEA9B /* AppDelegate.swift in Sources */,
+				F1F51263249D1764007BDEC1 /* settingsVC.swift in Sources */,
 				F1AC9FDB249424800068EEA1 /* draftCell.swift in Sources */,
 				F1F07FE6249196CC001DEA9B /* extensions.swift in Sources */,
 				F1AC9FD92493E1810068EEA1 /* Captions.xcdatamodeld in Sources */,
@@ -563,7 +591,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.petervirtue.captionBreak;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Caption Tools";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -582,7 +610,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.petervirtue.captionBreak;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Caption Tools";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

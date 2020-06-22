@@ -35,7 +35,6 @@ class previewView: UIView {
     
     func setup(_ s: NSMutableAttributedString) {
         
-        print(s)
         // Instagram name
         let attrs: [NSAttributedString.Key : Any] = [
             .font : UIFont.boldSystemFont(ofSize: 14)
@@ -50,13 +49,5 @@ class previewView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }

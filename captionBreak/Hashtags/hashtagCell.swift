@@ -15,6 +15,7 @@ class hashtagCell: UITableViewCell {
     var backPlate: UIView!
     var textView: UITextView!
     var label: UILabel!
+    var editArrow: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -55,7 +56,7 @@ class hashtagCell: UITableViewCell {
         
         let labelCons = [
             label.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 12),
-            label.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -12),
+            label.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -25),
             label.bottomAnchor.constraint(equalTo: backPlate.topAnchor, constant: 30),
             label.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 10)
         ]
@@ -73,15 +74,13 @@ class hashtagCell: UITableViewCell {
         textView.backgroundColor = .white
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.layer.cornerRadius = 5
-        //textView.contentInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
-        //textView.textContainer.maximumNumberOfLines = 6
         textView.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingTail
         
         let textViewCons = [
             textView.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 10),
-            textView.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -10),
+            textView.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -25),
             textView.bottomAnchor.constraint(equalTo: backPlate.bottomAnchor, constant: -10),
             textView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 5)
         ]
@@ -89,21 +88,28 @@ class hashtagCell: UITableViewCell {
         self.contentView.addSubview(textView)
         
         NSLayoutConstraint.activate(textViewCons)
+        
+        // Edit arrow
+        
+        editArrow = UIImageView(frame: .zero)
+        editArrow.image = UIImage(systemName: "chevron.right")
+        editArrow.tintColor = .gray
+        editArrow.translatesAutoresizingMaskIntoConstraints = false
+        
+        let arrowCons = [
+            editArrow.leftAnchor.constraint(equalTo: textView.rightAnchor, constant: 5),
+            editArrow.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -10),
+            editArrow.bottomAnchor.constraint(equalTo: backPlate.centerYAnchor, constant: 10),
+            editArrow.topAnchor.constraint(equalTo: backPlate.centerYAnchor, constant: -10)
+        ]
+        
+        self.addSubview(editArrow)
+        
+        NSLayoutConstraint.activate(arrowCons)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

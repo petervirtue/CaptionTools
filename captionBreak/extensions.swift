@@ -169,7 +169,7 @@ extension UITableView {
         
         let titleCons = [
             titleLabel.centerXAnchor.constraint(equalTo: ev.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: ev.centerYAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: ev.centerYAnchor, constant: -18),
         ]
         
         ev.addSubview(titleLabel)
@@ -205,5 +205,20 @@ extension UITableView {
         
         self.backgroundView = nil
         //self.separatorStyle = .singleLine
+    }
+}
+
+extension String {
+    func amountOfHashtags() -> Int {
+        var count = 0
+        let words = NSString(string: self).components(separatedBy: " ")
+        
+        for word in words {
+            if word.hasPrefix("#") {
+                count = count + 1
+            }
+        }
+        
+        return count
     }
 }
