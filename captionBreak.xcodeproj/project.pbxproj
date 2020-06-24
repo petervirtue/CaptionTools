@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F110DF2F249AFA71008C13F0 /* addHashtagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F110DF2E249AFA71008C13F0 /* addHashtagsVC.swift */; };
+		F129E17A24A2A5AA005B5986 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F129E17924A2A5AA005B5986 /* ShadowView.swift */; };
 		F139FBFE249978D2005C12D0 /* editorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139FBFD249978D2005C12D0 /* editorCell.swift */; };
 		F139FC00249A8449005C12D0 /* hahstagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139FBFF249A8449005C12D0 /* hahstagTextField.swift */; };
 		F1AC9FD92493E1810068EEA1 /* Captions.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FD72493E1810068EEA1 /* Captions.xcdatamodeld */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		F110DF2E249AFA71008C13F0 /* addHashtagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addHashtagsVC.swift; sourceTree = "<group>"; };
+		F129E17924A2A5AA005B5986 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		F139FBFD249978D2005C12D0 /* editorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorCell.swift; sourceTree = "<group>"; };
 		F139FBFF249A8449005C12D0 /* hahstagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hahstagTextField.swift; sourceTree = "<group>"; };
 		F1AC9FD82493E1810068EEA1 /* Captions.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Captions.xcdatamodel; sourceTree = "<group>"; };
@@ -112,12 +114,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F111E08B249267BB00FD21C4 /* keyboard */ = {
+		F111E08B249267BB00FD21C4 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
 				F1F07FDE24913DA4001DEA9B /* textEditBar.swift */,
 			);
-			path = keyboard;
+			path = Keyboard;
 			sourceTree = "<group>";
 		};
 		F1F07F9924912105001DEA9B = {
@@ -144,21 +146,21 @@
 			isa = PBXGroup;
 			children = (
 				F1F51261249D1747007BDEC1 /* Settings */,
-				F1FA337324926DBD000466B9 /* colors */,
-				F111E08B249267BB00FD21C4 /* keyboard */,
-				F1F07FE0249185A3001DEA9B /* preview */,
+				F1FA337324926DBD000466B9 /* Colors */,
+				F111E08B249267BB00FD21C4 /* Keyboard */,
+				F1F07FE0249185A3001DEA9B /* Preview */,
 				F1FA337F2492E6C9000466B9 /* Hashtags */,
-				F1F07FD62491354E001DEA9B /* drafts */,
-				F1F07FD524913546001DEA9B /* home */,
+				F1F07FD62491354E001DEA9B /* Drafts */,
+				F1F07FD524913546001DEA9B /* Home */,
 				F1F07FA524912105001DEA9B /* AppDelegate.swift */,
 				F1F07FE5249196CC001DEA9B /* extensions.swift */,
 				F1F07FA724912105001DEA9B /* SceneDelegate.swift */,
 				F1F07FDB24913A4F001DEA9B /* tabBarVC.swift */,
+				F1FA337B2492E33E000466B9 /* LightNavigationController.swift */,
 				F1F07FAB24912105001DEA9B /* Main.storyboard */,
 				F1F07FB024912108001DEA9B /* LaunchScreen.storyboard */,
 				F1F07FB324912108001DEA9B /* Info.plist */,
 				F1F07FAE24912108001DEA9B /* Assets.xcassets */,
-				F1FA337B2492E33E000466B9 /* LightNavigationController.swift */,
 				F1AC9FD72493E1810068EEA1 /* Captions.xcdatamodeld */,
 			);
 			path = captionBreak;
@@ -182,31 +184,31 @@
 			path = captionBreakUITests;
 			sourceTree = "<group>";
 		};
-		F1F07FD524913546001DEA9B /* home */ = {
+		F1F07FD524913546001DEA9B /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				F1F07FD724913752001DEA9B /* homeVC.swift */,
 				F110DF2E249AFA71008C13F0 /* addHashtagsVC.swift */,
 			);
-			path = home;
+			path = Home;
 			sourceTree = "<group>";
 		};
-		F1F07FD62491354E001DEA9B /* drafts */ = {
+		F1F07FD62491354E001DEA9B /* Drafts */ = {
 			isa = PBXGroup;
 			children = (
 				F1FA337D2492E6C0000466B9 /* draftsVC.swift */,
 				F1AC9FDA249424800068EEA1 /* draftCell.swift */,
 			);
-			path = drafts;
+			path = Drafts;
 			sourceTree = "<group>";
 		};
-		F1F07FE0249185A3001DEA9B /* preview */ = {
+		F1F07FE0249185A3001DEA9B /* Preview */ = {
 			isa = PBXGroup;
 			children = (
 				F1F07FE124918604001DEA9B /* previewVC.swift */,
 				F1F07FE32491861A001DEA9B /* previewView.swift */,
 			);
-			path = preview;
+			path = Preview;
 			sourceTree = "<group>";
 		};
 		F1F51261249D1747007BDEC1 /* Settings */ = {
@@ -227,12 +229,13 @@
 			path = Editor;
 			sourceTree = "<group>";
 		};
-		F1FA337324926DBD000466B9 /* colors */ = {
+		F1FA337324926DBD000466B9 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
 				F1FA337424926DD0000466B9 /* Colors.swift */,
+				F129E17924A2A5AA005B5986 /* ShadowView.swift */,
 			);
-			path = colors;
+			path = Colors;
 			sourceTree = "<group>";
 		};
 		F1FA337F2492E6C9000466B9 /* Hashtags */ = {
@@ -389,6 +392,7 @@
 				F1F07FDF24913DA4001DEA9B /* textEditBar.swift in Sources */,
 				F139FBFE249978D2005C12D0 /* editorCell.swift in Sources */,
 				F1F07FD824913752001DEA9B /* homeVC.swift in Sources */,
+				F129E17A24A2A5AA005B5986 /* ShadowView.swift in Sources */,
 				F1AC9FDD2497F1B30068EEA1 /* hashtagCell.swift in Sources */,
 				F1FA33812492E6DD000466B9 /* hashtagsVC.swift in Sources */,
 				F1F07FA624912105001DEA9B /* AppDelegate.swift in Sources */,
@@ -570,6 +574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YVS4RVRH78;
 				INFOPLIST_FILE = captionBreak/Info.plist;
@@ -578,8 +583,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.petervirtue.captionBreak;
 				PRODUCT_NAME = "Caption Tools";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -589,6 +596,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YVS4RVRH78;
 				INFOPLIST_FILE = captionBreak/Info.plist;
@@ -597,8 +605,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.petervirtue.captionBreak;
 				PRODUCT_NAME = "Caption Tools";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
