@@ -47,40 +47,45 @@ class draftsVC: UITableViewController {
     
     func setup() {
         
+        let l = self.view.safeAreaLayoutGuide
+        
         // Background
         
-        self.view.backgroundColor = Colors.lightGray
-        //self.view.backgroundColor = .white//Colors.backGray
+        //self.view.backgroundColor = Colors.lightGray
+        self.view.backgroundColor = Colors.backGray
         
         // Table view styling
         
         self.tableView.separatorStyle = .none
-        self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         
         // Navigation Controller
-        
+        /*
         self.navigationController?.navigationBar.isOpaque = true
         self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.barTintColor = Colors.backGray
+        self.navigationController?.navigationBar.backgroundColor = Colors.backGray
         self.navigationController?.navigationBar.tintColor = Colors.igPink
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        
+        */
         // Cosmetic changes for a future update
         
-        /*let appearance = UINavigationBarAppearance()
+        let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.backgroundColor = .white
+        appearance.backgroundColor = Colors.backGray
+        appearance.shadowImage = UIImage()
+        appearance.backgroundImage = UIImage()
         self.navigationController?.navigationBar.compactAppearance = appearance
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.isTranslucent = true
-        //self.navigationController?.navigationBar.barTintColor = .clear
-        self.navigationController?.navigationBar.tintColor = Colors.igPink*/
+        self.navigationController?.navigationBar.barTintColor = Colors.backGray
+        self.navigationController?.navigationBar.tintColor = Colors.igPink
+        self.navigationController?.hideHairline()
         
         // Settings and Editing button
         
@@ -92,7 +97,7 @@ class draftsVC: UITableViewController {
     // Cell Height
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 115
+        return 105
     }
     
     // Creating each cell
@@ -112,6 +117,39 @@ class draftsVC: UITableViewController {
         
         cell.textView.attributedText = t
         cell.label.text = String(indexPath.row + 1)
+        
+        // Corner rounding for first and last object
+        
+        cell.backPlate.layer.cornerRadius = 0
+        
+        if (captions.count == 1) {
+            
+            // Round all corners as the item is the only one in the array
+            
+            cell.backPlate.layer.cornerRadius = 10
+            
+            // Remove seperator
+            
+            cell.seperator.removeFromSuperview()
+            
+        } else if (indexPath.row == 0) {
+            
+            // Round top corners
+            
+            cell.backPlate.layer.cornerRadius = 10
+            cell.backPlate.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            
+            // Remove seperator
+            
+            cell.seperator.removeFromSuperview()
+            
+        } else if (indexPath.row == captions.count - 1) {
+            
+            // ROund bottom corners
+            
+            cell.backPlate.layer.cornerRadius = 10
+            cell.backPlate.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        }
         
         return cell
     }
@@ -138,6 +176,7 @@ class draftsVC: UITableViewController {
             captions.remove(at: indexPath.row)
             removeCaption(caption)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
+            self.tableView.reloadData()
         }
     }
     

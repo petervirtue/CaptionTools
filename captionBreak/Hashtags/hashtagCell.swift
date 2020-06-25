@@ -16,6 +16,7 @@ class hashtagCell: UITableViewCell {
     var textView: UITextView!
     var label: UILabel!
     var editArrow: UIImageView!
+    var seperator: UIView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -34,15 +35,32 @@ class hashtagCell: UITableViewCell {
         backPlate.layer.cornerRadius = 4
         
         let backCons = [
-            backPlate.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 20),
-            backPlate.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20),
-            backPlate.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5),
-            backPlate.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5)
+            backPlate.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 16),
+            backPlate.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -16),
+            backPlate.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0),
+            backPlate.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0)
         ]
         
         self.contentView.addSubview(backPlate)
         
         NSLayoutConstraint.activate(backCons)
+        
+        // Seperator line
+        
+        seperator = UIView(frame: .zero)
+        seperator.translatesAutoresizingMaskIntoConstraints = false
+        seperator.backgroundColor = Colors.backGray
+        
+        let seperatorCons = [
+            seperator.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 20),
+            seperator.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: 0),
+            seperator.bottomAnchor.constraint(equalTo: backPlate.topAnchor, constant: 1),
+            seperator.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 0)
+        ]
+        
+        self.contentView.addSubview(seperator)
+        
+        NSLayoutConstraint.activate(seperatorCons)
         
         // Label
         

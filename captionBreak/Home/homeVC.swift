@@ -79,10 +79,10 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         // View
         
-        self.view.backgroundColor = Colors.lightGray
+        self.view.backgroundColor = Colors.backGray
         
         // Navigation Controller
-        
+        /*
         self.navigationController?.navigationBar.isOpaque = true
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barTintColor = .white
@@ -91,6 +91,23 @@ class homeVC: UIViewController, UITextViewDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+        */
+        // Cosmetic chages for a future update
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.backgroundColor = Colors.backGray
+        appearance.shadowImage = UIImage()
+        appearance.backgroundImage = UIImage()
+        self.navigationController?.navigationBar.compactAppearance = appearance
+        self.navigationController?.navigationBar.standardAppearance = appearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.barTintColor = Colors.backGray
+        self.navigationController?.navigationBar.tintColor = Colors.igPink
+        self.navigationController?.hideHairline()
         
         // Save Draft button
         
@@ -107,8 +124,8 @@ class homeVC: UIViewController, UITextViewDelegate {
         self.tabBarController?.tabBar.backgroundColor = UIColor.white
         self.tabBarController?.tabBar.tintColor = UIColor.black
         self.tabBarController?.tabBar.unselectedItemTintColor = Colors.gray
-        self.tabBarController?.tabBar.shadowImage = UIImage()
-        self.tabBarController?.tabBar.backgroundImage = UIImage()
+        //self.tabBarController?.tabBar.shadowImage = UIImage()
+        //self.tabBarController?.tabBar.backgroundImage = UIImage()
         
         // Character Image
         
@@ -119,10 +136,10 @@ class homeVC: UIViewController, UITextViewDelegate {
         charactersImage.contentMode = .scaleAspectFill
         
         let countImageCons = [
-            charactersImage.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 25),
-            charactersImage.rightAnchor.constraint(equalTo: l.leftAnchor, constant: 35),
-            charactersImage.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
-            charactersImage.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 30)
+            charactersImage.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 16),
+            charactersImage.rightAnchor.constraint(equalTo: l.leftAnchor, constant: 26),
+            charactersImage.topAnchor.constraint(equalTo: l.topAnchor, constant: 0),
+            charactersImage.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 10)
         ]
         
         self.view.addSubview(charactersImage)
@@ -142,8 +159,8 @@ class homeVC: UIViewController, UITextViewDelegate {
         let countCons = [
             charactersUsed.leftAnchor.constraint(equalTo: charactersImage.rightAnchor, constant: 5),
             charactersUsed.rightAnchor.constraint(equalTo: charactersImage.rightAnchor, constant: 70),
-            charactersUsed.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
-            charactersUsed.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 30)
+            charactersUsed.topAnchor.constraint(equalTo: l.topAnchor, constant: 0),
+            charactersUsed.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 10)
         ]
         
         self.view.addSubview(charactersUsed)
@@ -161,8 +178,8 @@ class homeVC: UIViewController, UITextViewDelegate {
         let hashtagImageCons = [
             hashtagsImage.leftAnchor.constraint(equalTo: charactersUsed.rightAnchor, constant: 5),
             hashtagsImage.rightAnchor.constraint(equalTo: charactersUsed.rightAnchor, constant: 15),
-            hashtagsImage.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
-            hashtagsImage.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 30)
+            hashtagsImage.topAnchor.constraint(equalTo: l.topAnchor, constant: 0),
+            hashtagsImage.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 10)
         ]
         
         self.view.addSubview(hashtagsImage)
@@ -181,8 +198,8 @@ class homeVC: UIViewController, UITextViewDelegate {
         let hashtagCons = [
             hashtagsUsed.leftAnchor.constraint(equalTo: hashtagsImage.rightAnchor, constant: 5),
             hashtagsUsed.rightAnchor.constraint(equalTo: l.centerXAnchor),
-            hashtagsUsed.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
-            hashtagsUsed.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 30)
+            hashtagsUsed.topAnchor.constraint(equalTo: l.topAnchor, constant: 0),
+            hashtagsUsed.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 10)
         ]
             
         self.view.addSubview(hashtagsUsed)
@@ -193,16 +210,18 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         captionIn = UITextView(frame: .zero)
         captionIn.translatesAutoresizingMaskIntoConstraints = false
-        captionIn.backgroundColor = Colors.lightGray
+        captionIn.backgroundColor = Colors.backGray
         captionIn.font = UIFont.systemFont(ofSize: 16)//UIFont(name: "Helvetica Neue", size: 16)//
         captionIn.textColor = UIColor.lightGray
         captionIn.text = "Start caption here..."
         captionIn.autocapitalizationType = .none
+        captionIn.textContainerInset = UIEdgeInsets.zero
+        captionIn.textContainer.lineFragmentPadding = 0
         
         let captionInCons = [
-            captionIn.topAnchor.constraint(equalTo: l.topAnchor, constant: 30),
-            captionIn.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 20),
-            captionIn.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -20)
+            captionIn.topAnchor.constraint(equalTo: l.topAnchor, constant: 20),
+            captionIn.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 16),
+            captionIn.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -16)
             //captionIn.bottomAnchor.constraintEqualToAnchor(l.bottomAnchor, constant: -110, id: "cib")
         ]
         
@@ -236,29 +255,29 @@ class homeVC: UIViewController, UITextViewDelegate {
             bottomPlate.topAnchor.constraint(equalTo: l.bottomAnchor, constant: -95)
         ]
         
-        self.view.addSubview(bottomPlate)
+        //self.view.addSubview(bottomPlate)
         
-        NSLayoutConstraint.activate(bottomPlateCons)
+        //NSLayoutConstraint.activate(bottomPlateCons)
         
         // Copy button
         
         copyButton = UIButton()//(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 170, height: 50))
         copyButton.translatesAutoresizingMaskIntoConstraints = false
-        copyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        copyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         copyButton.setTitle("COPY CAPTION", for: .normal)
         copyButton.layer.cornerRadius = 15
         //copyButton.layer.borderWidth = 2.5
         //copyButton.layer.borderColor = Colors.igPink!.cgColor
         copyButton.clipsToBounds = true
-        copyButton.tintColor = UIColor.white
-        copyButton.backgroundColor = Colors.igPink
-        copyButton.setTitleColor(UIColor.white, for: .normal)
+        copyButton.tintColor = Colors.igPink
+        copyButton.backgroundColor = UIColor.white
+        copyButton.setTitleColor(Colors.igPink, for: .normal)
         
         let copyCons = [
-            copyButton.topAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 40),
+            copyButton.topAnchor.constraint(equalTo: l.bottomAnchor, constant: -80),
             copyButton.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 40),
             copyButton.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -40),
-            copyButton.bottomAnchor.constraint(equalTo: bottomPlate.topAnchor, constant: 85)
+            copyButton.bottomAnchor.constraint(equalTo: l.bottomAnchor, constant: -30)
         ]
         
         self.view.addSubview(copyButton)
@@ -459,6 +478,9 @@ class homeVC: UIViewController, UITextViewDelegate {
         captionInBottom.constant = ((self.view.frame.height / 4) * -1) - 140
         captionIn.layoutIfNeeded()
         
+        // Navigation Controller
+        
+        self.navigationItem.largeTitleDisplayMode = .never
         
     }
     
@@ -480,6 +502,10 @@ class homeVC: UIViewController, UITextViewDelegate {
         UIView.animate(withDuration: 25, animations: {
             self.captionIn.layoutIfNeeded()
         })
+        
+        // Navigation Controller
+        
+        self.navigationItem.largeTitleDisplayMode = .always
         
     }
     

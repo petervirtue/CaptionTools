@@ -64,7 +64,7 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         // Background
         
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = Colors.backGray
         
         // Safe layout area
         
@@ -118,7 +118,7 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         tagsTitle = UITextField(frame: .zero)
         tagsTitle.delegate = self
-        tagsTitle.backgroundColor = UIColor.white
+        tagsTitle.backgroundColor = Colors.backGray
         tagsTitle.translatesAutoresizingMaskIntoConstraints = false
         tagsTitle.font = UIFont.boldSystemFont(ofSize: 25)
         tagsTitle.textColor = UIColor.black
@@ -141,7 +141,7 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         close = UIButton(frame: .zero)
         close.translatesAutoresizingMaskIntoConstraints = false
         close.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        close.backgroundColor = UIColor.white
+        close.backgroundColor = Colors.backGray
         close.tintColor = Colors.igPink
         
         let closeCons = [
@@ -151,6 +151,9 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
             close.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 65)
         ]
         
+        
+        // Work in here, start to transition the cells over to a combined look
+        
         self.view.addSubview(close)
         
         NSLayoutConstraint.activate(closeCons)
@@ -158,7 +161,7 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         // Table view
         
         tableView = UITableView(frame: .zero)
-        tableView.backgroundColor = Colors.lightGray
+        tableView.backgroundColor = Colors.backGray
         tableView.translatesAutoresizingMaskIntoConstraints = false
         let tableViewCons = [
             tableView.leftAnchor.constraint(equalTo: l.leftAnchor),
@@ -190,14 +193,14 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tagsInput.font = UIFont.systemFont(ofSize: 16)
         tagsInput.autocorrectionType = .no
         tagsInput.textColor = UIColor.black
-        tagsInput.layer.cornerRadius = 10
-        tagsInput.layer.borderWidth = 2.5
-        tagsInput.layer.borderColor = Colors.lightGray.cgColor
+        tagsInput.layer.cornerRadius = 20
+        //tagsInput.layer.borderWidth = 2.5
+        //tagsInput.layer.borderColor = Colors.lightGray.cgColor
         tagsInput.attributedPlaceholder = NSAttributedString(string: "Hashtag goes here", attributes: placeholderatts)
         
         let tagsInputCons = [
-            tagsInput.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 20),
-            tagsInput.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -65),
+            tagsInput.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 16),
+            tagsInput.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -16),
             tagsInput.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 10),
             tagsInput.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 50)
         ]
@@ -213,13 +216,13 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         submit.setImage(UIImage(systemName: "arrow.up"), for: .normal)
         submit.tintColor = UIColor.white
         submit.backgroundColor = Colors.igPink
-        submit.layer.cornerRadius = 10
+        submit.layer.cornerRadius = 15
         
         let submitCons = [
-            submit.leftAnchor.constraint(equalTo: tagsInput.rightAnchor, constant: 5),
-            submit.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -20),
-            submit.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 10),
-            submit.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 50)
+            submit.leftAnchor.constraint(equalTo: l.rightAnchor, constant: -51),//-53.5),
+            submit.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -21),//-18.5),
+            submit.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 15),
+            submit.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 45)
         ]
         
         self.view.addSubview(submit)

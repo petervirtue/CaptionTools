@@ -84,6 +84,14 @@ extension UIView {
     func constraint(withID: String) -> NSLayoutConstraint? {
         return self.constraints.filter{ $0.identifier == withID }.first
     }
+    
+    func roundTopCorners(radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: radius, height: radius))
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = self.bounds
+        maskLayer.path = path.cgPath
+        self.layer.mask = maskLayer
+    }
 }
 
 extension NSLayoutAnchor {
@@ -220,5 +228,30 @@ extension String {
         }
         
         return count
+    }
+}
+
+extension UINavigationController {
+
+    func hideHairline() {
+        if let hairline = findHairlineImageViewUnder(navigationBar) {
+            hairline.isHidden = true
+        }
+    }
+    func restoreHairline() {
+        if let hairline = findHairlineImageViewUnder(navigationBar) {
+            hairline.isHidden = false
+        }
+    }
+    func findHairlineImageViewUnder(_ view: UIView) -> UIImageView? {
+        if view is UIImageView && view.bounds.size.height <= 1.0 {
+            return view as? UIImageView
+        }
+        for subview in view.subviews {
+            if let imageView = self.findHairlineImageViewUnder(subview) {
+                return imageView
+            }
+        }
+        return nil
     }
 }

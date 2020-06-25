@@ -17,6 +17,7 @@ class draftCell: UITableViewCell {
     var textView: UITextView!
     var editArrow: UIImageView!
     var shadowPlate: ShadowView!
+    var seperator: UIView!
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -34,7 +35,7 @@ class draftCell: UITableViewCell {
         backPlate.backgroundColor = UIColor.white
         backPlate.isUserInteractionEnabled = false
         backPlate.translatesAutoresizingMaskIntoConstraints = false
-        backPlate.layer.cornerRadius = 5
+        //backPlate.layer.cornerRadius = 5
         
         // Cosmetic updates for a future update
         
@@ -47,10 +48,10 @@ class draftCell: UITableViewCell {
         backPlate.layer.rasterizationScale = UIScreen.main.scale */
         
         let backCons = [
-            backPlate.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 20),
-            backPlate.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -20),
-            backPlate.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5),
-            backPlate.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5)
+            backPlate.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 16),
+            backPlate.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -16),
+            backPlate.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0),
+            backPlate.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0)
         ]
         
         self.contentView.addSubview(backPlate)
@@ -65,7 +66,7 @@ class draftCell: UITableViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.layer.cornerRadius = 5
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = UIColor.white
+        //label.backgroundColor = UIColor.white
         
         let labelCons = [
             label.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 10),
@@ -78,13 +79,30 @@ class draftCell: UITableViewCell {
         
         NSLayoutConstraint.activate(labelCons)
         
+        // Seperator line
+        
+        seperator = UIView(frame: .zero)
+        seperator.translatesAutoresizingMaskIntoConstraints = false
+        seperator.backgroundColor = Colors.backGray
+        
+        let seperatorCons = [
+            seperator.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 20),
+            seperator.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: 0),
+            seperator.bottomAnchor.constraint(equalTo: backPlate.topAnchor, constant: 1),
+            seperator.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 0)
+        ]
+        
+        self.contentView.addSubview(seperator)
+        
+        NSLayoutConstraint.activate(seperatorCons)
+        
         // Text view
         
         textView = UITextView()
         textView.isEditable = false
         textView.isUserInteractionEnabled = false
         textView.textColor = UIColor.black
-        textView.backgroundColor = .white
+        textView.backgroundColor = .white//Colors.backGray
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.layer.cornerRadius = 5
         textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
