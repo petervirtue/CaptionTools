@@ -32,18 +32,18 @@ class settingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         // Background
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.init(named: "background2")!
         
         // Drag bar
         
         dragbar = UIView(frame: .zero)
-        dragbar.backgroundColor = UIColor.gray
+        dragbar.backgroundColor = UIColor.systemGray3
         dragbar.layer.cornerRadius = 2.5
         dragbar.translatesAutoresizingMaskIntoConstraints = false
         
         let dragbarCons = [
-            dragbar.leftAnchor.constraint(equalTo: l.centerXAnchor, constant: -50),
-            dragbar.rightAnchor.constraint(equalTo: l.centerXAnchor, constant: 50),
+            dragbar.leftAnchor.constraint(equalTo: l.centerXAnchor, constant: -20),
+            dragbar.rightAnchor.constraint(equalTo: l.centerXAnchor, constant: 20),
             dragbar.topAnchor.constraint(equalTo: l.topAnchor, constant: 10),
             dragbar.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 15)
         ]
@@ -55,15 +55,15 @@ class settingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Title label
         
         titleLabel = UILabel(frame: .zero)
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 25)
-        titleLabel.textColor = .black
+        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 34)//UIFont.boldSystemFont(ofSize: 32)
+        titleLabel.textColor = UIColor.init(named: "textColor")!
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = "Settings"
         
         let titleCons = [
-            titleLabel.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 20),
-            titleLabel.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -20),
-            titleLabel.topAnchor.constraint(equalTo: l.topAnchor, constant: 30),
+            titleLabel.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 16),
+            titleLabel.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -16),
+            titleLabel.topAnchor.constraint(equalTo: l.topAnchor, constant: 32),
             titleLabel.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 80)
         ]
         
@@ -78,7 +78,7 @@ class settingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white//Colors.lightGray
+        tableView.backgroundColor = UIColor.init(named: "background2")!
         tableView.translatesAutoresizingMaskIntoConstraints = false
         //tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         
@@ -99,7 +99,7 @@ class settingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         developerLabel.text = "© 2020 Peter Virtue, All Rights Reserved"
         developerLabel.textAlignment = .center
         developerLabel.font = UIFont.systemFont(ofSize: 12)
-        developerLabel.textColor = .gray
+        developerLabel.textColor = UIColor.systemGray2
         developerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let devCons = [
@@ -112,14 +112,7 @@ class settingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.view.addSubview(developerLabel)
         
         NSLayoutConstraint.activate(devCons)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
-    // MARK: - Table view data source
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -129,15 +122,15 @@ class settingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
-        cell.backgroundColor = .white
-        cell.textLabel?.textColor = .black
+        cell.backgroundColor = UIColor.init(named: "background2")!
+        cell.textLabel?.textColor = UIColor.init(named: "textColor")!
         cell.textLabel?.text = options[indexPath.row]
         //cell.accessoryType = .disclosureIndicator
         let chevron = UIImageView(image: UIImage(systemName: "chevron.right"))
-        chevron.tintColor = .gray
+        chevron.tintColor = UIColor.systemGray3
         cell.accessoryView = chevron
-        cell.imageView?.tintColor = Colors.igPink
-        cell.tintColor = .gray
+        cell.imageView?.tintColor = UIColor.init(named: "pink")!
+        cell.tintColor = UIColor.systemGray3
         cell.selectionStyle = .none
         
         if options[indexPath.row] == "Review the App" {
@@ -154,7 +147,10 @@ class settingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.cellForRow(at: indexPath)?.backgroundColor = Colors.lightGray
+        
+        // Selection color
+        
+        tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.init(named: "element2")!
         
         // Feedback
 
@@ -173,7 +169,7 @@ class settingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.white
+        tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.init(named: "background2")
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

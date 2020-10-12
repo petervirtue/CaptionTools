@@ -25,15 +25,12 @@ class homeVC: UIViewController, UITextViewDelegate {
     var captionIn: UITextView!
     var previewButton: UIButton!
     var shareButton: UIButton!
-    @objc var copyButton: UIButton!
+    var copyButton: UIButton!
     var toolbar: textEditBar!
     var charactersUsed: UILabel!
     var charactersImage: UIImageView!
     var hashtagsUsed: UILabel!
     var hashtagsImage: UIImageView!
-    var bottomPlate: UIView!
-    //var gradient: UIView!
-    //var gradLayer: CAGradientLayer!
     
     // Bottom constraint for Text Field
     
@@ -69,6 +66,8 @@ class homeVC: UIViewController, UITextViewDelegate {
         super.viewWillAppear(animated)
         
         updateCounts(captionIn)
+        
+        updateViewConstraints()
     }
     
     func setup() {
@@ -79,34 +78,10 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         // View
         
-        self.view.backgroundColor = Colors.backGray
+        self.view.backgroundColor = UIColor.init(named: "background")!
         
-        // Navigation Controller
-        /*
-        self.navigationController?.navigationBar.isOpaque = true
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.tintColor = Colors.igPink
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        */
-        // Cosmetic chages for a future update
+        // Hiding the hairline
         
-        let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.backgroundColor = Colors.backGray
-        appearance.shadowImage = UIImage()
-        appearance.backgroundImage = UIImage()
-        self.navigationController?.navigationBar.compactAppearance = appearance
-        self.navigationController?.navigationBar.standardAppearance = appearance
-        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.barTintColor = Colors.backGray
-        self.navigationController?.navigationBar.tintColor = Colors.igPink
         self.navigationController?.hideHairline()
         
         // Save Draft button
@@ -120,19 +95,19 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         self.tabBarController?.tabBar.isOpaque = true
         self.tabBarController?.tabBar.isTranslucent = false
-        self.tabBarController?.tabBar.barTintColor = UIColor.white
-        self.tabBarController?.tabBar.backgroundColor = UIColor.white
-        self.tabBarController?.tabBar.tintColor = UIColor.black
-        self.tabBarController?.tabBar.unselectedItemTintColor = Colors.gray
-        //self.tabBarController?.tabBar.shadowImage = UIImage()
-        //self.tabBarController?.tabBar.backgroundImage = UIImage()
+        self.tabBarController?.tabBar.barTintColor = UIColor.init(named: "tabColor")!
+        self.tabBarController?.tabBar.backgroundColor = UIColor.init(named: "tabColor")!
+        self.tabBarController?.tabBar.tintColor = UIColor.init(named: "textColor")!
+        self.tabBarController?.tabBar.unselectedItemTintColor = UIColor.systemGray3
+        self.tabBarController?.tabBar.shadowImage = UIImage()
+        self.tabBarController?.tabBar.backgroundImage = UIImage()
         
         // Character Image
         
         charactersImage = UIImageView(frame: .zero)
         charactersImage.image = UIImage(systemName: "t.square")
         charactersImage.translatesAutoresizingMaskIntoConstraints = false
-        charactersImage.tintColor = UIColor.black
+        charactersImage.tintColor = UIColor.init(named: "textColor")!
         charactersImage.contentMode = .scaleAspectFill
         
         let countImageCons = [
@@ -152,8 +127,8 @@ class homeVC: UIViewController, UITextViewDelegate {
         charactersUsed = UILabel(frame: .zero)
         charactersUsed.translatesAutoresizingMaskIntoConstraints = false
         charactersUsed.textAlignment = .left
-        charactersUsed.font = UIFont.systemFont(ofSize: 10)
-        charactersUsed.textColor = UIColor.black
+        charactersUsed.font = UIFont(name: "Montserrat-Regular", size: 10)//UIFont.systemFont(ofSize: 10)
+        charactersUsed.textColor = UIColor.init(named: "textColor")!
         charactersUsed.text = "0 / 2200"
         
         let countCons = [
@@ -172,7 +147,7 @@ class homeVC: UIViewController, UITextViewDelegate {
         hashtagsImage = UIImageView(frame: .zero)
         hashtagsImage.image = UIImage(systemName: "number.square")
         hashtagsImage.translatesAutoresizingMaskIntoConstraints = false
-        hashtagsImage.tintColor = UIColor.black
+        hashtagsImage.tintColor = UIColor.init(named: "textColor")!
         hashtagsImage.contentMode = .scaleAspectFill
         
         let hashtagImageCons = [
@@ -191,8 +166,8 @@ class homeVC: UIViewController, UITextViewDelegate {
         hashtagsUsed = UILabel(frame: .zero)
         hashtagsUsed.translatesAutoresizingMaskIntoConstraints = false
         hashtagsUsed.textAlignment = .left
-        hashtagsUsed.font = UIFont.systemFont(ofSize: 10)
-        hashtagsUsed.textColor = UIColor.black
+        hashtagsUsed.font = UIFont(name: "Montserrat-Regular", size: 10)//UIFont.systemFont(ofSize: 10)
+        hashtagsUsed.textColor = UIColor.init(named: "textColor")!
         hashtagsUsed.text = "0 / 30"
             
         let hashtagCons = [
@@ -210,9 +185,9 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         captionIn = UITextView(frame: .zero)
         captionIn.translatesAutoresizingMaskIntoConstraints = false
-        captionIn.backgroundColor = Colors.backGray
+        captionIn.backgroundColor = UIColor.init(named: "background")!
         captionIn.font = UIFont.systemFont(ofSize: 16)//UIFont(name: "Helvetica Neue", size: 16)//
-        captionIn.textColor = UIColor.lightGray
+        captionIn.textColor = UIColor.systemGray3
         captionIn.text = "Start caption here..."
         captionIn.autocapitalizationType = .none
         captionIn.textContainerInset = UIEdgeInsets.zero
@@ -241,37 +216,19 @@ class homeVC: UIViewController, UITextViewDelegate {
         toolbar.keyboardDown.addTarget(self, action: #selector(closeKeyboard), for: .touchUpInside)
         captionIn.inputAccessoryView = toolbar
         
-        // Bottom plate
-        
-        bottomPlate = UIView(frame: .zero)
-        bottomPlate.translatesAutoresizingMaskIntoConstraints = false
-        bottomPlate.backgroundColor = UIColor.white
-        bottomPlate.layer.cornerRadius = 30
-        
-        let bottomPlateCons = [
-            bottomPlate.leftAnchor.constraint(equalTo: l.leftAnchor),
-            bottomPlate.rightAnchor.constraint(equalTo: l.rightAnchor),
-            bottomPlate.bottomAnchor.constraint(equalTo: l.bottomAnchor, constant: 30),
-            bottomPlate.topAnchor.constraint(equalTo: l.bottomAnchor, constant: -95)
-        ]
-        
-        //self.view.addSubview(bottomPlate)
-        
-        //NSLayoutConstraint.activate(bottomPlateCons)
-        
         // Copy button
         
         copyButton = UIButton()//(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 170, height: 50))
         copyButton.translatesAutoresizingMaskIntoConstraints = false
-        copyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        copyButton.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 18)//UIFont.boldSystemFont(ofSize: 18)
         copyButton.setTitle("COPY CAPTION", for: .normal)
         copyButton.layer.cornerRadius = 15
         //copyButton.layer.borderWidth = 2.5
         //copyButton.layer.borderColor = Colors.igPink!.cgColor
         copyButton.clipsToBounds = true
-        copyButton.tintColor = Colors.igPink
-        copyButton.backgroundColor = UIColor.white
-        copyButton.setTitleColor(Colors.igPink, for: .normal)
+        copyButton.tintColor = UIColor.init(named: "pink")!
+        copyButton.backgroundColor = UIColor.init(named: "element")!
+        copyButton.setTitleColor(UIColor.init(named: "pink")!, for: .normal)
         
         let copyCons = [
             copyButton.topAnchor.constraint(equalTo: l.bottomAnchor, constant: -80),
@@ -306,6 +263,7 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         let pvc = previewVC()
         pvc.mas = mas
+        //pvc.addCaption(mas)
         
         // Feedback
         
@@ -380,13 +338,13 @@ class homeVC: UIViewController, UITextViewDelegate {
         ]
         
         // Set selected text to normal
-        
+        /*
         let range = captionIn.selectedRange
         let toChange = NSMutableAttributedString(attributedString: captionIn.attributedText)
         toChange.addAttributes(attrs, range: range)
         captionIn.attributedText = toChange
         captionIn.selectedRange = range
-        
+        */
         // Set text kind
         
         captionIn.typingAttributes = attrs
@@ -399,9 +357,9 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         // Edit the buttons
         
-        toolbar.bold.tintColor = Colors.gray
-        toolbar.italic.tintColor = Colors.gray
-        toolbar.normal.tintColor = .black
+        toolbar.bold.tintColor = UIColor.systemGray3
+        toolbar.italic.tintColor = UIColor.systemGray3
+        toolbar.normal.tintColor = UIColor.init(named: "textColor")!
     }
     
     // Set bold text
@@ -419,9 +377,9 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         // Edit the buttons
         
-        toolbar.bold.tintColor = .black
-        toolbar.italic.tintColor = Colors.gray
-        toolbar.normal.tintColor = Colors.gray
+        toolbar.bold.tintColor = UIColor.init(named: "textColor")!
+        toolbar.italic.tintColor = UIColor.systemGray3
+        toolbar.normal.tintColor = UIColor.systemGray3
         
     }
     
@@ -439,9 +397,9 @@ class homeVC: UIViewController, UITextViewDelegate {
         generator.impactOccurred()
         
         // Edit the buttons
-        toolbar.bold.tintColor = Colors.gray
-        toolbar.italic.tintColor = .black
-        toolbar.normal.tintColor = Colors.gray
+        toolbar.bold.tintColor = UIColor.systemGray3
+        toolbar.italic.tintColor = UIColor.init(named: "textColor")!
+        toolbar.normal.tintColor = UIColor.systemGray3
     }
     
     @objc func clearText(_ sender: UIButton) {
@@ -463,9 +421,9 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         // Placeholder
         
-        if textView.textColor == UIColor.lightGray {
+        if textView.textColor == UIColor.systemGray3 {
             textView.text = nil
-            textView.textColor = UIColor.black
+            textView.textColor = UIColor.init(named: "textColor")!
             
             // Feedback
 
@@ -495,7 +453,7 @@ class homeVC: UIViewController, UITextViewDelegate {
             
             textView.typingAttributes = attrs
             textView.text = "Start caption here..."
-            textView.textColor = UIColor.lightGray
+            textView.textColor = UIColor.systemGray3
         }
         
         captionInBottom.constant = -110
@@ -534,8 +492,6 @@ class homeVC: UIViewController, UITextViewDelegate {
     
     // Update toolbar status as the cursor moves NOTE - Might be too taxing so testing needs to be done
     
-    
-    
     // Close the keyboard
     
     @objc func closeKeyboard(_ sender: UIButton) {
@@ -556,7 +512,7 @@ class homeVC: UIViewController, UITextViewDelegate {
         
         // Dont let a caption be saved if it is the placeholder text
         
-        if captionIn.textColor == UIColor.lightGray {
+        if captionIn.textColor == UIColor.systemGray3 {
             
             // Error VC
             
@@ -659,6 +615,7 @@ class homeVC: UIViewController, UITextViewDelegate {
         // Update caption
         
         captionIn.attributedText = combo
+        captionIn.textColor = UIColor.init(named: "textColor")!
         
         updateCounts(captionIn)
     }
@@ -667,11 +624,13 @@ class homeVC: UIViewController, UITextViewDelegate {
     
     func updateCounts(_ textView: UITextView) {
         
-        if textView.textColor == UIColor.lightGray {
+        if textView.textColor == UIColor.systemGray3 {
             charactersUsed.text = "0 / 2200"
             hashtagsUsed.text = "0 / 30"
             return
         }
+        
+        textView.textColor = UIColor.init(named: "textColor")!
         let chars = textView.text.count
         var tags = textView.text.amountOfHashtags()
         if tags != 0 {
@@ -684,16 +643,16 @@ class homeVC: UIViewController, UITextViewDelegate {
             charactersUsed.textColor = .red
             charactersImage.tintColor = .red
         } else {
-            charactersUsed.textColor = .black
-            charactersImage.tintColor = .black
+            charactersUsed.textColor = UIColor.init(named: "textColor")!
+            charactersImage.tintColor = UIColor.init(named: "textColor")!
         }
         
         if tags > 30 {
             hashtagsUsed.textColor = .red
             hashtagsImage.tintColor = .red
         } else {
-            hashtagsUsed.textColor = .black
-            hashtagsImage.tintColor = .black
+            hashtagsUsed.textColor = UIColor.init(named: "textColor")!
+            hashtagsImage.tintColor = UIColor.init(named: "textColor")!
         }
     }
     

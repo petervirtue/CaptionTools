@@ -32,20 +32,9 @@ class draftCell: UITableViewCell {
         // Back plate
         
         backPlate = UIView()
-        backPlate.backgroundColor = UIColor.white
+        backPlate.backgroundColor = UIColor.init(named: "element")!
         backPlate.isUserInteractionEnabled = false
         backPlate.translatesAutoresizingMaskIntoConstraints = false
-        //backPlate.layer.cornerRadius = 5
-        
-        // Cosmetic updates for a future update
-        
-        /*
-        backPlate.layer.shadowOffset = CGSize(width: 0, height: 3)
-        backPlate.layer.shadowRadius = 3
-        backPlate.layer.shadowOpacity = 0.3
-        backPlate.layer.shadowPath = CGPath(roundedRect: self.bounds, cornerWidth: 5, cornerHeight: 5, transform: nil)//UIBezierPath(roundedRect: self.bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: 5, height: 5))
-        backPlate.layer.shouldRasterize = true
-        backPlate.layer.rasterizationScale = UIScreen.main.scale */
         
         let backCons = [
             backPlate.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 16),
@@ -62,15 +51,14 @@ class draftCell: UITableViewCell {
         
         label = UILabel()
         label.isUserInteractionEnabled = false
-        label.textColor = UIColor.black
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.layer.cornerRadius = 5
+        label.textColor = UIColor.init(named: "textColor")!
+        label.font = UIFont(name: "Montserrat-Bold", size: 18)//UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         //label.backgroundColor = UIColor.white
         
         let labelCons = [
-            label.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 10),
-            label.rightAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 32),
+            label.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 16),
+            label.rightAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 38),
             label.bottomAnchor.constraint(equalTo: backPlate.topAnchor, constant: 32),
             label.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 12)
         ]
@@ -83,11 +71,11 @@ class draftCell: UITableViewCell {
         
         seperator = UIView(frame: .zero)
         seperator.translatesAutoresizingMaskIntoConstraints = false
-        seperator.backgroundColor = Colors.backGray
+        seperator.backgroundColor = UIColor.systemGray4
         
         let seperatorCons = [
-            seperator.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 20),
-            seperator.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: 0),
+            seperator.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 16),
+            seperator.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -16),
             seperator.bottomAnchor.constraint(equalTo: backPlate.topAnchor, constant: 1),
             seperator.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 0)
         ]
@@ -101,19 +89,17 @@ class draftCell: UITableViewCell {
         textView = UITextView()
         textView.isEditable = false
         textView.isUserInteractionEnabled = false
-        textView.textColor = UIColor.black
-        textView.backgroundColor = .white//Colors.backGray
+        textView.textColor = UIColor.init(named: "textColor")!
+        textView.backgroundColor = UIColor.init(named: "element")!
         textView.font = UIFont.systemFont(ofSize: 16)
-        textView.layer.cornerRadius = 5
         textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
-        //textView.textContainer.maximumNumberOfLines = 6
         textView.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingTail
         
         let textViewCons = [
             textView.leftAnchor.constraint(equalTo: label.rightAnchor, constant: 5),
-            textView.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -25),
+            textView.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -31),
             textView.bottomAnchor.constraint(equalTo: backPlate.bottomAnchor, constant: -5),
             textView.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 5)
         ]
@@ -126,12 +112,12 @@ class draftCell: UITableViewCell {
         
         editArrow = UIImageView(frame: .zero)
         editArrow.image = UIImage(systemName: "chevron.right")
-        editArrow.tintColor = .gray
+        editArrow.tintColor = UIColor.systemGray3
         editArrow.translatesAutoresizingMaskIntoConstraints = false
         
         let arrowCons = [
             editArrow.leftAnchor.constraint(equalTo: textView.rightAnchor, constant: 5),
-            editArrow.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -10),
+            editArrow.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -16),
             editArrow.bottomAnchor.constraint(equalTo: backPlate.centerYAnchor, constant: 10),
             editArrow.topAnchor.constraint(equalTo: backPlate.centerYAnchor, constant: -10)
         ]

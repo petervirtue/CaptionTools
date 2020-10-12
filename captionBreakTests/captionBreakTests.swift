@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import captionBreak
+//@testable import captionBreak
 
 class captionBreakTests: XCTestCase {
 

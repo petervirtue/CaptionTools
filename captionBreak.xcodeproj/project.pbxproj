@@ -11,6 +11,8 @@
 		F129E17A24A2A5AA005B5986 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F129E17924A2A5AA005B5986 /* ShadowView.swift */; };
 		F139FBFE249978D2005C12D0 /* editorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139FBFD249978D2005C12D0 /* editorCell.swift */; };
 		F139FC00249A8449005C12D0 /* hahstagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139FBFF249A8449005C12D0 /* hahstagTextField.swift */; };
+		F1856C35251BABC50084AEAE /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F1856C34251BABBF0084AEAE /* Montserrat-Bold.ttf */; };
+		F1856C3A251BABD20084AEAE /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F1856C39251BABD20084AEAE /* Montserrat-Regular.ttf */; };
 		F1AC9FD92493E1810068EEA1 /* Captions.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FD72493E1810068EEA1 /* Captions.xcdatamodeld */; };
 		F1AC9FDB249424800068EEA1 /* draftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FDA249424800068EEA1 /* draftCell.swift */; };
 		F1AC9FDD2497F1B30068EEA1 /* hashtagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AC9FDC2497F1B30068EEA1 /* hashtagCell.swift */; };
@@ -58,6 +60,8 @@
 		F129E17924A2A5AA005B5986 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		F139FBFD249978D2005C12D0 /* editorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorCell.swift; sourceTree = "<group>"; };
 		F139FBFF249A8449005C12D0 /* hahstagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hahstagTextField.swift; sourceTree = "<group>"; };
+		F1856C34251BABBF0084AEAE /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Bold.ttf"; path = "../../../../../../Downloads/Montserrat/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		F1856C39251BABD20084AEAE /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Regular.ttf"; path = "../../../../../../Downloads/Montserrat/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		F1AC9FD82493E1810068EEA1 /* Captions.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Captions.xcdatamodel; sourceTree = "<group>"; };
 		F1AC9FDA249424800068EEA1 /* draftCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = draftCell.swift; sourceTree = "<group>"; };
 		F1AC9FDC2497F1B30068EEA1 /* hashtagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hashtagCell.swift; sourceTree = "<group>"; };
@@ -117,9 +121,19 @@
 		F111E08B249267BB00FD21C4 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				F110DF2E249AFA71008C13F0 /* addHashtagsVC.swift */,
 				F1F07FDE24913DA4001DEA9B /* textEditBar.swift */,
 			);
 			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		F1856C33251BABA90084AEAE /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F1856C34251BABBF0084AEAE /* Montserrat-Bold.ttf */,
+				F1856C39251BABD20084AEAE /* Montserrat-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		F1F07F9924912105001DEA9B = {
@@ -162,6 +176,7 @@
 				F1F07FB324912108001DEA9B /* Info.plist */,
 				F1F07FAE24912108001DEA9B /* Assets.xcassets */,
 				F1AC9FD72493E1810068EEA1 /* Captions.xcdatamodeld */,
+				F1856C33251BABA90084AEAE /* Fonts */,
 			);
 			path = captionBreak;
 			sourceTree = "<group>";
@@ -188,7 +203,6 @@
 			isa = PBXGroup;
 			children = (
 				F1F07FD724913752001DEA9B /* homeVC.swift */,
-				F110DF2E249AFA71008C13F0 /* addHashtagsVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -312,7 +326,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Peter Virtue";
 				TargetAttributes = {
 					F1F07FA124912105001DEA9B = {
@@ -353,8 +367,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1856C35251BABC50084AEAE /* Montserrat-Bold.ttf in Resources */,
 				F1F07FB224912108001DEA9B /* LaunchScreen.storyboard in Resources */,
 				F1F07FAF24912108001DEA9B /* Assets.xcassets in Resources */,
+				F1856C3A251BABD20084AEAE /* Montserrat-Regular.ttf in Resources */,
 				F1F07FAD24912105001DEA9B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +498,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -506,7 +523,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -542,6 +559,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -560,7 +578,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -576,7 +594,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YVS4RVRH78;
 				INFOPLIST_FILE = captionBreak/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -584,7 +602,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.petervirtue.captionBreak;
 				PRODUCT_NAME = "Caption Tools";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -599,7 +617,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YVS4RVRH78;
 				INFOPLIST_FILE = captionBreak/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -607,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.petervirtue.captionBreak;
 				PRODUCT_NAME = "Caption Tools";
 				PROVISIONING_PROFILE_SPECIFIER = "";

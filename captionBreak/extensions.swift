@@ -171,13 +171,13 @@ extension UITableView {
         // Title label
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = UIColor.init(named: "textColor")!
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.text = title
         
         let titleCons = [
             titleLabel.centerXAnchor.constraint(equalTo: ev.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: ev.centerYAnchor, constant: -18),
+            titleLabel.centerYAnchor.constraint(equalTo: ev.centerYAnchor, constant: 0),
         ]
         
         ev.addSubview(titleLabel)
@@ -187,7 +187,7 @@ extension UITableView {
         // Sub label
     
         subLabel.translatesAutoresizingMaskIntoConstraints = false
-        subLabel.textColor = UIColor.lightGray
+        subLabel.textColor = UIColor.systemGray3
         subLabel.font = UIFont.systemFont(ofSize: 17)
         subLabel.numberOfLines = 0
         subLabel.textAlignment = .center

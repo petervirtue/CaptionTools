@@ -18,11 +18,15 @@ class tabBarVC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let font = UIFont(name: "SanFranciscoDisplay-Light", size: 21)
+        self.tabBarItem.setTitleTextAttributes([.font: UIFont(name: "Montserrat-Bold", size: 12)], for: .normal)
 
         // Home
         
         home = LightNavigationController(rootViewController: homeVC.sharedInstance)
         home.title = "Create"
+        home.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: font!]
         home.tabBarItem.image = UIImage(systemName: "square.and.pencil")
         
         // Drafts
@@ -44,7 +48,4 @@ class tabBarVC: UITabBarController {
 
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
 }

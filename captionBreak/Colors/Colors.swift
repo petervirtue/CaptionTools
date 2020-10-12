@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Colors {
+/*struct Colors {
     
     // IG colors
     static let igBlue = UIColor.init(hex: "#405de6ff")
@@ -29,4 +29,4 @@ struct Colors {
     static let backGray = UIColor.init(hex: "#efedf3ff")
 
     
-}
+}*/

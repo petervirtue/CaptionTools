@@ -27,7 +27,7 @@ class hashtagsVC: UITableViewController {
         // Controller setup
         
         self.title = "Hashtags"
-        self.edgesForExtendedLayout = []
+        self.edgesForExtendedLayout = [.top]
         
         // Table view setup
         
@@ -51,39 +51,15 @@ class hashtagsVC: UITableViewController {
         
         // Background
         
-        self.view.backgroundColor = Colors.backGray
+        self.view.backgroundColor = UIColor.init(named: "background")!
         
         // Table view styling
         
         self.tableView.separatorStyle = .none
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         
-        // Navigation Controller
-        /*
-        self.navigationController?.navigationBar.isOpaque = true
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.tintColor = Colors.igPink
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        */
-        // Cosmetic changes for a future update
+        // Hiding the hairline
         
-        let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.backgroundColor = Colors.backGray
-        appearance.shadowImage = UIImage()
-        appearance.backgroundImage = UIImage()
-        self.navigationController?.navigationBar.compactAppearance = appearance
-        self.navigationController?.navigationBar.standardAppearance = appearance
-        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.barTintColor = Colors.backGray
-        self.navigationController?.navigationBar.tintColor = Colors.igPink
         self.navigationController?.hideHairline()
         
         // Add and Editing button
@@ -93,6 +69,8 @@ class hashtagsVC: UITableViewController {
     
         
     }
+    
+    // Table view deletion
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
@@ -112,6 +90,8 @@ class hashtagsVC: UITableViewController {
         }
     }
     
+    // Table view is empty or not
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if hashtags.count == 0 {
@@ -123,9 +103,13 @@ class hashtagsVC: UITableViewController {
         return hashtags.count
     }
     
+    // Table view height
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
+    
+    // Table view cell creation
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -161,42 +145,44 @@ class hashtagsVC: UITableViewController {
             }
             
             cell.textView.attributedText = tagsMutable
-            
-            // Corner rounding for first and last object
-            
-            cell.backPlate.layer.cornerRadius = 0
-            
-            if (hashtags.count == 1) {
-                
-                // Round all corners as the item is the only one in the array
-                
-                cell.backPlate.layer.cornerRadius = 10
-                
-                // Remove seperator
-                
-                cell.seperator.removeFromSuperview()
-                
-            } else if (indexPath.row == 0) {
-                
-                // Round top corners
-                
-                cell.backPlate.layer.cornerRadius = 10
-                cell.backPlate.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-                
-                // Remove seperator
-                
-                cell.seperator.removeFromSuperview()
-                
-            } else if (indexPath.row == hashtags.count - 1) {
-                
-                // ROund bottom corners
-                
-                cell.backPlate.layer.cornerRadius = 10
-                cell.backPlate.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            }
+            cell.textView.textColor = UIColor.init(named: "textColor")!
             
         } catch let error as NSError {
             print("Error loading content into the cells. \n \(error)")
+        }
+        
+        // Corner rounding for first and last object
+        
+        cell.backPlate.layer.cornerRadius = 0
+        cell.backPlate.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]
+        
+        if (hashtags.count == 1) {
+            
+            // Round all corners as the item is the only one in the array
+            
+            cell.backPlate.layer.cornerRadius = 10
+            
+            // Remove seperator
+            
+            cell.seperator.removeFromSuperview()
+            
+        } else if (indexPath.row == 0) {
+            
+            // Round top corners
+            
+            cell.backPlate.layer.cornerRadius = 10
+            cell.backPlate.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            
+            // Remove seperator
+            
+            cell.seperator.removeFromSuperview()
+            
+        } else if (indexPath.row == hashtags.count - 1) {
+            
+            // ROund bottom corners
+            
+            cell.backPlate.layer.cornerRadius = 10
+            cell.backPlate.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         }
         
         return cell
@@ -323,8 +309,6 @@ class hashtagsVC: UITableViewController {
         do {
             managedContext.delete(hashtag)
             try managedContext.save()
-            //loadData()
-            //tableView.reloadData()
         } catch let error as NSError {
             print("Could not save data after deletion. \(error), \(error.userInfo)")
         }
@@ -380,7 +364,26 @@ class hashtagsVC: UITableViewController {
         hashtags.remove(at: at.row)
         self.tableView.deleteRows(at: [at], with: .fade)
         removeHashtags(hashtag)
+        self.tableView.reloadData()
         
+    }
+    
+    override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
+            return self.makeDeleteMenuFor(indexPath)
+        })
+    }
+    
+    func makeDeleteMenuFor(_ indexPath: IndexPath) -> UIMenu {
+        
+        let deleteConfirm = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+            self.deleteHashtag(at: indexPath)
+        }
+        let cancel = UIAction(title: "Cancel", image: UIImage(systemName: "xmark")) { action in }
+        
+        let delete = UIMenu(title: "Delete", image: UIImage(systemName: "trash"), options: .destructive, children: [cancel, deleteConfirm])
+        
+        return UIMenu(title: "", children: [delete])
     }
 
 }

@@ -25,14 +25,14 @@ class hashtagCell: UITableViewCell {
         
         self.backgroundColor = .clear
         self.selectionStyle = .none
+        self.selectedBackgroundView = nil
         
         // Back plate
         
         backPlate = UIView()
-        backPlate.backgroundColor = UIColor.white
+        backPlate.backgroundColor = UIColor.init(named: "element")!
         backPlate.isUserInteractionEnabled = false
         backPlate.translatesAutoresizingMaskIntoConstraints = false
-        backPlate.layer.cornerRadius = 4
         
         let backCons = [
             backPlate.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 16),
@@ -49,11 +49,11 @@ class hashtagCell: UITableViewCell {
         
         seperator = UIView(frame: .zero)
         seperator.translatesAutoresizingMaskIntoConstraints = false
-        seperator.backgroundColor = Colors.backGray
+        seperator.backgroundColor = UIColor.systemGray3
         
         let seperatorCons = [
-            seperator.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 20),
-            seperator.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: 0),
+            seperator.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 16),
+            seperator.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -16),
             seperator.bottomAnchor.constraint(equalTo: backPlate.topAnchor, constant: 1),
             seperator.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 0)
         ]
@@ -66,17 +66,17 @@ class hashtagCell: UITableViewCell {
         
         label = UILabel()
         label.isUserInteractionEnabled = false
-        label.textColor = UIColor.black
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = UIColor.init(named: "textColor")!
+        label.font = UIFont(name: "Montserrat-Bold", size: 18)//UIFont.boldSystemFont(ofSize: 18)
         label.layer.cornerRadius = 5
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = UIColor.white
+        label.backgroundColor = UIColor.init(named: "element")!
         
         let labelCons = [
-            label.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 12),
-            label.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -25),
-            label.bottomAnchor.constraint(equalTo: backPlate.topAnchor, constant: 30),
-            label.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 10)
+            label.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 16),
+            label.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -31),
+            label.bottomAnchor.constraint(equalTo: backPlate.topAnchor, constant: 32),
+            label.topAnchor.constraint(equalTo: backPlate.topAnchor, constant: 12)
         ]
         
         self.contentView.addSubview(label)
@@ -88,18 +88,20 @@ class hashtagCell: UITableViewCell {
         textView = UITextView()
         textView.isEditable = false
         textView.isUserInteractionEnabled = false
-        textView.textColor = UIColor.black
-        textView.backgroundColor = .white
+        textView.textColor = UIColor.init(named: "textColor")!
+        textView.backgroundColor = UIColor.init(named: "element")!
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.layer.cornerRadius = 5
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        textView.textContainerInset = UIEdgeInsets.zero
+        textView.textContainer.lineFragmentPadding = 0
         
         let textViewCons = [
-            textView.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 10),
-            textView.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -25),
-            textView.bottomAnchor.constraint(equalTo: backPlate.bottomAnchor, constant: -10),
+            textView.leftAnchor.constraint(equalTo: backPlate.leftAnchor, constant: 16),
+            textView.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -31),
+            textView.bottomAnchor.constraint(equalTo: backPlate.bottomAnchor, constant: -16),
             textView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 5)
         ]
         
@@ -111,12 +113,12 @@ class hashtagCell: UITableViewCell {
         
         editArrow = UIImageView(frame: .zero)
         editArrow.image = UIImage(systemName: "chevron.right")
-        editArrow.tintColor = .gray
+        editArrow.tintColor = UIColor.systemGray3
         editArrow.translatesAutoresizingMaskIntoConstraints = false
         
         let arrowCons = [
             editArrow.leftAnchor.constraint(equalTo: textView.rightAnchor, constant: 5),
-            editArrow.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -10),
+            editArrow.rightAnchor.constraint(equalTo: backPlate.rightAnchor, constant: -16),
             editArrow.bottomAnchor.constraint(equalTo: backPlate.centerYAnchor, constant: 10),
             editArrow.topAnchor.constraint(equalTo: backPlate.centerYAnchor, constant: -10)
         ]

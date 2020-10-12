@@ -38,53 +38,28 @@ class draftsVC: UITableViewController {
         setup()
     }
     
+    // View Will Appear
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Load data
+        
         loadData()
     }
     
     func setup() {
         
-        let l = self.view.safeAreaLayoutGuide
-        
         // Background
-        
-        //self.view.backgroundColor = Colors.lightGray
-        self.view.backgroundColor = Colors.backGray
+        self.view.backgroundColor = UIColor.init(named: "background")!
         
         // Table view styling
         
         self.tableView.separatorStyle = .none
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         
-        // Navigation Controller
-        /*
-        self.navigationController?.navigationBar.isOpaque = true
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barTintColor = Colors.backGray
-        self.navigationController?.navigationBar.backgroundColor = Colors.backGray
-        self.navigationController?.navigationBar.tintColor = Colors.igPink
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        */
-        // Cosmetic changes for a future update
+        // Hiding the hairline
         
-        let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.backgroundColor = Colors.backGray
-        appearance.shadowImage = UIImage()
-        appearance.backgroundImage = UIImage()
-        self.navigationController?.navigationBar.compactAppearance = appearance
-        self.navigationController?.navigationBar.standardAppearance = appearance
-        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.barTintColor = Colors.backGray
-        self.navigationController?.navigationBar.tintColor = Colors.igPink
         self.navigationController?.hideHairline()
         
         // Settings and Editing button
@@ -116,11 +91,13 @@ class draftsVC: UITableViewController {
         // Set data and return
         
         cell.textView.attributedText = t
+        cell.textView.textColor = UIColor.init(named: "textColor")!
         cell.label.text = String(indexPath.row + 1)
         
         // Corner rounding for first and last object
         
         cell.backPlate.layer.cornerRadius = 0
+        cell.backPlate.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]
         
         if (captions.count == 1) {
             
@@ -162,10 +139,6 @@ class draftsVC: UITableViewController {
         
         if editingStyle == .delete {
             
-            // Get the specific caption
-            
-            let caption = captions[indexPath.row]
-            
             // Feedback
             
             let generator = UINotificationFeedbackGenerator()
@@ -173,10 +146,7 @@ class draftsVC: UITableViewController {
             
             // Remove the caption from the captions array, Core Data, and the TableView
             
-            captions.remove(at: indexPath.row)
-            removeCaption(caption)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-            self.tableView.reloadData()
+            deleteCaption(at: indexPath)
         }
     }
     
@@ -233,6 +203,23 @@ class draftsVC: UITableViewController {
         } catch let error as NSError {
             print("Could not save data. \(error), \(error.userInfo)") 
         }
+    }
+    
+    // Delete draft
+    
+    func deleteCaption(at: IndexPath) {
+        
+        // Get hashtag
+        
+        let caption = captions[at.row]
+        
+        // Remove the caption from the captions array, Core Data, and the TableView
+        
+        captions.remove(at: at.row)
+        self.tableView.deleteRows(at: [at], with: .fade)
+        removeCaption(caption)
+        self.tableView.reloadData()
+        
     }
     
     // Remove caption from Core Data
@@ -319,7 +306,7 @@ class draftsVC: UITableViewController {
     
     // Set the TableView as editing
     
-    @objc func setTVEditing() {
+    @objc func setTVEditing(_ sender: UIBarButtonItem) {
         if self.tableView.isEditing {
             self.tableView.setEditing(false, animated: true)
         } else {
@@ -345,6 +332,28 @@ class draftsVC: UITableViewController {
         
         let settings = settingsVC()
         present(settings, animated: true, completion: nil)
+    }
+    
+    // Context menu for drafts
+    
+    override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
+            return self.makeDeleteMenuFor(indexPath)
+        })
+    }
+    
+    // Delete from context menu
+    
+    func makeDeleteMenuFor(_ indexPath: IndexPath) -> UIMenu {
+        
+        let deleteConfirm = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+            self.deleteCaption(at: indexPath)
+        }
+        let cancel = UIAction(title: "Cancel", image: UIImage(systemName: "xmark")) { action in }
+        
+        let delete = UIMenu(title: "Delete", image: UIImage(systemName: "trash"), options: .destructive, children: [cancel, deleteConfirm])
+        
+        return UIMenu(title: "", children: [delete])
     }
 
 }

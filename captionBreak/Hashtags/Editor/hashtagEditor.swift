@@ -64,7 +64,7 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         // Background
         
-        self.view.backgroundColor = Colors.backGray
+        self.view.backgroundColor = UIColor.init(named: "background2")!
         
         // Safe layout area
         
@@ -80,7 +80,7 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         hashtagsImage = UIImageView(frame: .zero)
         hashtagsImage.image = UIImage(systemName: "number.square")
         hashtagsImage.translatesAutoresizingMaskIntoConstraints = false
-        hashtagsImage.tintColor = UIColor.black
+        hashtagsImage.tintColor = UIColor.init(named: "textColor")!
         hashtagsImage.contentMode = .scaleAspectFill
         
         let hashtagImageCons = [
@@ -99,8 +99,8 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         hashtagsUsed = UILabel(frame: .zero)
         hashtagsUsed.translatesAutoresizingMaskIntoConstraints = false
         hashtagsUsed.textAlignment = .left
-        hashtagsUsed.font = UIFont.systemFont(ofSize: 10)
-        hashtagsUsed.textColor = UIColor.black
+        hashtagsUsed.font = UIFont(name: "Montserrat-Regular", size: 10)//UIFont.systemFont(ofSize: 10)
+        hashtagsUsed.textColor = UIColor.init(named: "textColor")!
         hashtagsUsed.text = "0 / 30"
             
         let hashtagCons = [
@@ -118,11 +118,11 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         tagsTitle = UITextField(frame: .zero)
         tagsTitle.delegate = self
-        tagsTitle.backgroundColor = Colors.backGray
+        tagsTitle.backgroundColor = UIColor.init(named: "background2")!
         tagsTitle.translatesAutoresizingMaskIntoConstraints = false
-        tagsTitle.font = UIFont.boldSystemFont(ofSize: 25)
-        tagsTitle.textColor = UIColor.black
-        let placeholderatts = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        tagsTitle.font = UIFont(name: "Montserrat-Bold", size: 25)//UIFont.boldSystemFont(ofSize: 25)
+        tagsTitle.textColor = UIColor.init(named: "textColor")!
+        let placeholderatts = [NSAttributedString.Key.foregroundColor: UIColor.systemGray3]
         tagsTitle.attributedPlaceholder = NSAttributedString(string: "Title goes here", attributes: placeholderatts)
         
         let tagsTitleCons = [
@@ -141,8 +141,8 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         close = UIButton(frame: .zero)
         close.translatesAutoresizingMaskIntoConstraints = false
         close.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        close.backgroundColor = Colors.backGray
-        close.tintColor = Colors.igPink
+        close.backgroundColor = UIColor.init(named: "background2")!
+        close.tintColor = UIColor.init(named: "pink")!
         
         let closeCons = [
             close.leftAnchor.constraint(equalTo: tagsTitle.rightAnchor, constant: 5),
@@ -151,9 +151,6 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
             close.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 65)
         ]
         
-        
-        // Work in here, start to transition the cells over to a combined look
-        
         self.view.addSubview(close)
         
         NSLayoutConstraint.activate(closeCons)
@@ -161,7 +158,7 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         // Table view
         
         tableView = UITableView(frame: .zero)
-        tableView.backgroundColor = Colors.backGray
+        tableView.backgroundColor = UIColor.init(named: "background2")!
         tableView.translatesAutoresizingMaskIntoConstraints = false
         let tableViewCons = [
             tableView.leftAnchor.constraint(equalTo: l.leftAnchor),
@@ -182,20 +179,17 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         
         // Hashtag input
         
         tagsInput = hashtagTextField(frame: .zero)
         tagsInput.delegate = self
-        tagsInput.backgroundColor = UIColor.white
+        tagsInput.backgroundColor = UIColor.init(named: "element2")!
         tagsInput.translatesAutoresizingMaskIntoConstraints = false
         tagsInput.font = UIFont.systemFont(ofSize: 16)
         tagsInput.autocorrectionType = .no
-        tagsInput.textColor = UIColor.black
+        tagsInput.textColor = UIColor.init(named: "textColor")!
         tagsInput.layer.cornerRadius = 20
-        //tagsInput.layer.borderWidth = 2.5
-        //tagsInput.layer.borderColor = Colors.lightGray.cgColor
         tagsInput.attributedPlaceholder = NSAttributedString(string: "Hashtag goes here", attributes: placeholderatts)
         
         let tagsInputCons = [
@@ -215,7 +209,7 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         submit.translatesAutoresizingMaskIntoConstraints = false
         submit.setImage(UIImage(systemName: "arrow.up"), for: .normal)
         submit.tintColor = UIColor.white
-        submit.backgroundColor = Colors.igPink
+        submit.backgroundColor = UIColor.init(named: "pink")!
         submit.layer.cornerRadius = 15
         
         let submitCons = [
@@ -285,13 +279,47 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "editorCell") as! editorCell
         
-        cell.hashtagLabel.text = "   #" + hashtags[indexPath.row]
+        cell.hashtagLabel.text = "#" + hashtags[indexPath.row]
+        
+        // Corner rounding for first and last object
+        
+        cell.backPlate.layer.cornerRadius = 0
+        cell.backPlate.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]
+        
+        if (hashtags.count == 1) {
+            
+            // Round all corners as the item is the only one in the array
+            
+            cell.backPlate.layer.cornerRadius = 10
+            
+            // Remove seperator
+            
+            cell.seperator.removeFromSuperview()
+            
+        } else if (indexPath.row == 0) {
+            
+            // Round top corners
+            
+            cell.backPlate.layer.cornerRadius = 10
+            cell.backPlate.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            
+            // Remove seperator
+            
+            cell.seperator.removeFromSuperview()
+            
+        } else if (indexPath.row == hashtags.count - 1) {
+            
+            // ROund bottom corners
+            
+            cell.backPlate.layer.cornerRadius = 10
+            cell.backPlate.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 40
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -565,8 +593,8 @@ class hashtagEditor: UIViewController, UITableViewDelegate, UITableViewDataSourc
             hashtagsUsed.textColor = .red
             hashtagsImage.tintColor = .red
         } else {
-            hashtagsUsed.textColor = .black
-            hashtagsImage.tintColor = .black
+            hashtagsUsed.textColor = UIColor.init(named: "textColor")!
+            hashtagsImage.tintColor = UIColor.init(named: "textColor")!
         }
     }
     
