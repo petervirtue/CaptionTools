@@ -33,31 +33,31 @@ class FormatTextBar: UIView {
         // Bold
         bold = UIButton(frame: CGRect(x: normal.frame.maxX, y: 0, width: self.frame.width / 6, height: self.frame.height))
         bold.setImage(UIImage(systemName: "bold"), for: .normal)
-        bold.tintColor = UIColor.systemGray3
+        bold.tintColor = UIColor.systemGray2
         self.addSubview(bold)
         
         // Italic
         italic = UIButton(frame: CGRect(x: bold.frame.maxX, y: 0, width: self.frame.width / 6, height: self.frame.height))
         italic.setImage(UIImage(systemName: "italic"), for: .normal)
-        italic.tintColor = UIColor.systemGray3
+        italic.tintColor = UIColor.systemGray2
         self.addSubview(italic)
         
         // Clear
         clear = UIButton(frame: CGRect(x: italic.frame.maxX, y: 0, width: self.frame.width / 6, height: self.frame.height))
         clear.setImage(UIImage(systemName: "trash"), for: .normal)
-        clear.tintColor = UIColor.systemGray3
+        clear.tintColor = UIColor.systemGray2
         self.addSubview(clear)
         
         // Hashtags
         hashtags = UIButton(frame: CGRect(x: clear.frame.maxX, y: 0, width: self.frame.width / 6, height: self.frame.height))
         hashtags.setImage(UIImage(systemName: "number"), for: .normal)
-        hashtags.tintColor = UIColor.systemGray3
+        hashtags.tintColor = UIColor.systemGray2
         self.addSubview(hashtags)
         
         // Keyboard Down
         keyboardDown = UIButton(frame: CGRect(x: hashtags.frame.maxX, y: 0, width: self.frame.width / 6, height: self.frame.height))
         keyboardDown.setImage(UIImage(systemName: "keyboard.chevron.compact.down"), for: .normal)
-        keyboardDown.tintColor = UIColor.systemGray3
+        keyboardDown.tintColor = UIColor.systemGray2
         self.addSubview(keyboardDown)
     }
     

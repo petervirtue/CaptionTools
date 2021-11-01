@@ -92,15 +92,23 @@ class HomeController: UIViewController, UITextViewDelegate {
         self.navigationItem.leftBarButtonItems = [UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareText)), UIBarButtonItem(image: UIImage(systemName: "person.crop.square"), style: .plain, target: self, action: #selector(showPreview))]
         
         // Tab bar controller
-        
-        self.tabBarController?.tabBar.isOpaque = true
-        self.tabBarController?.tabBar.isTranslucent = false
-        self.tabBarController?.tabBar.barTintColor = UIColor.init(named: "tabColor")!
-        self.tabBarController?.tabBar.backgroundColor = UIColor.init(named: "tabColor")!
-        self.tabBarController?.tabBar.tintColor = UIColor.init(named: "textColor")!
-        self.tabBarController?.tabBar.unselectedItemTintColor = UIColor.systemGray3
-        self.tabBarController?.tabBar.shadowImage = UIImage()
-        self.tabBarController?.tabBar.backgroundImage = UIImage()
+                
+        if let tbc = self.tabBarController {
+            tbc.tabBar.barStyle = .default
+            tbc.tabBar.barTintColor = UIColor.init(named: "tabColor")!
+            tbc.tabBar.backgroundColor = UIColor.init(named: "tabColor")!
+            tbc.tabBar.tintColor = UIColor.init(named: "textColor")!
+            tbc.tabBar.unselectedItemTintColor = UIColor.systemGray2
+//            tbc.tabBar.shadowImage = UIImage()
+//            tbc.tabBar.backgroundImage = UIImage()
+
+            if let items = tbc.tabBar.items
+            {
+                for item in items {
+                    item.title = ""
+                }
+            }
+        }
         
         // Character Image
         
@@ -226,9 +234,9 @@ class HomeController: UIViewController, UITextViewDelegate {
         //copyButton.layer.borderWidth = 2.5
         //copyButton.layer.borderColor = Colors.igPink!.cgColor
         copyButton.clipsToBounds = true
-        copyButton.tintColor = UIColor.init(named: "pink")!
-        copyButton.backgroundColor = UIColor.init(named: "element")!
-        copyButton.setTitleColor(UIColor.init(named: "pink")!, for: .normal)
+        copyButton.tintColor = UIColor.white//UIColor.init(named: "pink")!
+        copyButton.backgroundColor = UIColor.init(named: "pink")!
+        copyButton.setTitleColor(UIColor.white, for: .normal)//(UIColor.init(named: "pink")!, for: .normal)
         
         let copyCons = [
             copyButton.topAnchor.constraint(equalTo: l.bottomAnchor, constant: -80),
@@ -357,8 +365,8 @@ class HomeController: UIViewController, UITextViewDelegate {
         
         // Edit the buttons
         
-        toolbar.bold.tintColor = UIColor.systemGray3
-        toolbar.italic.tintColor = UIColor.systemGray3
+        toolbar.bold.tintColor = UIColor.systemGray2
+        toolbar.italic.tintColor = UIColor.systemGray2
         toolbar.normal.tintColor = UIColor.init(named: "textColor")!
     }
     
@@ -378,8 +386,8 @@ class HomeController: UIViewController, UITextViewDelegate {
         // Edit the buttons
         
         toolbar.bold.tintColor = UIColor.init(named: "textColor")!
-        toolbar.italic.tintColor = UIColor.systemGray3
-        toolbar.normal.tintColor = UIColor.systemGray3
+        toolbar.italic.tintColor = UIColor.systemGray2
+        toolbar.normal.tintColor = UIColor.systemGray2
         
     }
     
@@ -397,9 +405,9 @@ class HomeController: UIViewController, UITextViewDelegate {
         generator.impactOccurred()
         
         // Edit the buttons
-        toolbar.bold.tintColor = UIColor.systemGray3
+        toolbar.bold.tintColor = UIColor.systemGray2
         toolbar.italic.tintColor = UIColor.init(named: "textColor")!
-        toolbar.normal.tintColor = UIColor.systemGray3
+        toolbar.normal.tintColor = UIColor.systemGray2
     }
     
     @objc func clearText(_ sender: UIButton) {
@@ -575,7 +583,7 @@ class HomeController: UIViewController, UITextViewDelegate {
             HashtagsController.sharedInstance.loadData()
         }
         addHashtags.hashtags = HashtagsController.sharedInstance.hashtags
-        addHashtags.tableView.reloadData()
+//        addHashtags.tableView.reloadData()
         
         // Feedback
 

@@ -9,42 +9,108 @@
 import UIKit
 import CoreData
 
-class NewHashtagsController: UITableViewController {
+class NewHashtagsController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var hashtags: [NSManagedObject] = []
-    var dragbar: UIView!
+    var tableView: UITableView!
+    var close: UIButton!
+    var tagsTitle: UILabel!
 
     override func viewDidLoad() {
 
+        // View did load
+
         super.viewDidLoad()
         
-        // Table view setup
-        self.tableView.register(HashtagTableCell.self, forCellReuseIdentifier: "hashtagCell")
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.view.backgroundColor = UIColor.init(named: "background2")!
-        self.tableView.separatorStyle = .none
-        self.tableView.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 20, right: 0)
+        // Modal Presentation
         
-        // Drag bar
-        dragbar = UIView(frame: .zero)
-        dragbar.backgroundColor = UIColor.systemGray3
-        dragbar.layer.cornerRadius = 2.5
-        dragbar.translatesAutoresizingMaskIntoConstraints = false
+        self.isModalInPresentation = true
+        
+        // Setup
+        
+        setup()
+        
+    }
+    
+    func setup() {
 
+        // Safe Layout
+        
         let l = self.view.safeAreaLayoutGuide
-        let dragbarCons = [
-            dragbar.leftAnchor.constraint(equalTo: l.centerXAnchor, constant: -20),
-            dragbar.rightAnchor.constraint(equalTo: l.centerXAnchor, constant: 20),
-            dragbar.topAnchor.constraint(equalTo: l.topAnchor, constant: 10),
-            dragbar.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 15)
+        
+        // Background
+        
+        self.view.backgroundColor = UIColor.init(named: "background2")!
+        
+        // Title input
+        
+        tagsTitle = UILabel(frame: .zero)
+        tagsTitle.text = "Hashtag Groups"
+        tagsTitle.backgroundColor = UIColor.init(named: "background2")!
+        tagsTitle.translatesAutoresizingMaskIntoConstraints = false
+        tagsTitle.font = UIFont(name: "Montserrat-Bold", size: 25)//UIFont.boldSystemFont(ofSize: 25)
+        tagsTitle.textColor = UIColor.init(named: "textColor")!
+
+        let tagsTitleCons = [
+            tagsTitle.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 20),
+            tagsTitle.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -65),
+            tagsTitle.topAnchor.constraint(equalTo: l.topAnchor, constant: 25),
+            tagsTitle.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 65)
         ]
         
-        self.view.addSubview(dragbar)
-        NSLayoutConstraint.activate(dragbarCons)
+        self.view.addSubview(tagsTitle)
+        
+        NSLayoutConstraint.activate(tagsTitleCons)
+        
+        // Close button
+        
+        close = UIButton(frame: .zero)
+        close.translatesAutoresizingMaskIntoConstraints = false
+        close.setImage(UIImage(systemName: "xmark"), for: .normal)
+        close.backgroundColor = UIColor.init(named: "background2")!
+        close.tintColor = UIColor.init(named: "pink")!
+        
+        let closeCons = [
+            close.leftAnchor.constraint(equalTo: tagsTitle.rightAnchor, constant: 5),
+            close.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -20),
+            close.topAnchor.constraint(equalTo: l.topAnchor, constant: 25),
+            close.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 65)
+        ]
+        
+        self.view.addSubview(close)
+        
+        NSLayoutConstraint.activate(closeCons)
+        
+        // Table view
+
+        tableView = UITableView(frame: .zero)
+        tableView.backgroundColor = UIColor.init(named: "background2")!
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        let tableViewCons = [
+            tableView.leftAnchor.constraint(equalTo: l.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: l.rightAnchor),
+            tableView.topAnchor.constraint(equalTo: tagsTitle.bottomAnchor, constant: 10)
+        ]
+        
+        let bottom = tableView.bottomAnchor.constraint(equalTo: l.bottomAnchor, constant: -70)
+        
+        self.view.addSubview(tableView)
+        
+        NSLayoutConstraint.activate(tableViewCons)
+        NSLayoutConstraint.activate([bottom])
+        
+        // Table view setup
+        
+        tableView.register(HashtagTableCell.self, forCellReuseIdentifier: "hashtagCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        
+        // Buttons
+        close.addTarget(self, action: #selector(closeScreen), for: .touchUpInside)
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if hashtags.count == 0 {
             tableView.setEmptyView(title: "No saved hashtags", sub: "Your hashtags will be in here")
         } else {
@@ -54,11 +120,15 @@ class NewHashtagsController: UITableViewController {
         return hashtags.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    @objc func closeScreen() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Create the cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "hashtagCell") as! HashtagTableCell
@@ -132,7 +202,7 @@ class NewHashtagsController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Getting data
         let data = hashtags[indexPath.row].value(forKey: "hashtags") as? NSData

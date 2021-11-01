@@ -227,9 +227,6 @@ class HashtagEditorController: UIViewController, UITableViewDelegate, UITableVie
         
         submit.addTarget(self, action: #selector(addHashtag), for: .touchUpInside)
         close.addTarget(self, action: #selector(saveHashtags), for: .touchUpInside)
-        
-        
-        
     }
     
     func setupFromSelection() {

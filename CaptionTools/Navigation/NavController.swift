@@ -32,15 +32,8 @@ class NavController: UINavigationController {
             )
         }
         
-        guard let tabFont = UIFont(name: "Montserrat-Bold", size: 12) else {
-            fatalError("""
-                Failed to load the "Montserrat-Bold" font.
-                Make sure the font file is included in the project and the font name is spelled correctly.
-                """
-            )
-        }
-        
         // Navigation Design
+
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.init(named: "textColor")!, .font: regularFont]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.init(named: "textColor")!, .font: largeFont]
@@ -55,8 +48,6 @@ class NavController: UINavigationController {
         self.navigationBar.barTintColor = UIColor.init(named: "background")!
         self.navigationBar.tintColor = UIColor.init(named: "pink")!
         
-        // Tab Bar Design
-        self.tabBarItem.setTitleTextAttributes([.font: tabFont], for: .normal)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

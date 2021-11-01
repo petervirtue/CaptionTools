@@ -51,6 +51,7 @@ class DraftsController: UITableViewController {
     func setup() {
         
         // Background
+        
         self.view.backgroundColor = UIColor.init(named: "background")!
         
         // Table view styling
@@ -62,9 +63,19 @@ class DraftsController: UITableViewController {
         
         self.navigationController?.hideHairline()
         
-        // Settings and Editing button
+        // Tab bar controller
+
+        if let tbc = self.tabBarController {
+            if let items = tbc.tabBar.items
+            {
+                for item in items {
+                    item.title = ""
+                }
+            }
+        }
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(openSettings))
+        // Settings and Editing button
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(setTVEditing))
         
     }
@@ -278,7 +289,7 @@ class DraftsController: UITableViewController {
         
         // Send to that view controller
         
-        self.tabBarController?.selectedIndex = 1
+        self.tabBarController?.selectedIndex = 0
     }
     
     func sendCaptionToEditor(_ caption: NSManagedObject) {
@@ -300,7 +311,7 @@ class DraftsController: UITableViewController {
         
         // Go to the VC
         
-        self.tabBarController?.selectedIndex = 1
+        self.tabBarController?.selectedIndex = 0
         
     }
     
@@ -317,21 +328,6 @@ class DraftsController: UITableViewController {
 
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
-    }
-    
-    // Open settings
-    
-    @objc func openSettings() {
-        
-        // Feedback
-
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
-        
-        // Create and present vc
-        
-        let settings = SettingsController()
-        present(settings, animated: true, completion: nil)
     }
     
     // Context menu for drafts

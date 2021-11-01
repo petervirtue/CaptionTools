@@ -14,19 +14,16 @@ class TabBarController: UITabBarController {
     var home: UIViewController!
     var drafts: UIViewController!
     var hashtags: UIViewController!
+    var user: UIViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let font = UIFont(name: "SanFranciscoDisplay-Light", size: 21)
-        let bold_font = UIFont(name: "Montserrat-Bold", size: 12)
-        self.tabBarItem.setTitleTextAttributes([.font: bold_font!], for: .normal)
 
         // Home
+
         home = NavController(rootViewController: HomeController.sharedInstance)
         home.title = "Create"
-        home.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: font!]
-        home.tabBarItem.image = UIImage(systemName: "square.and.pencil")
+        home.tabBarItem.image = UIImage(systemName: "pencil.tip")
         
         // Drafts
         
@@ -38,11 +35,21 @@ class TabBarController: UITabBarController {
         
         hashtags = NavController(rootViewController: HashtagsController.sharedInstance)
         hashtags.title = "Hashtags"
-        hashtags.tabBarItem.image = UIImage(systemName: "number.square")
+        hashtags.tabBarItem.image = UIImage(systemName: "number")
+        
+        // User
+        user = NavController(rootViewController: UserController.sharedInstance)
+        user.title = "Profile"
+        user.tabBarItem.image = UIImage(systemName: "person.fill")
         
         // Adding all view controllers
         
-        self.viewControllers = [drafts, home, hashtags]
-        self.selectedIndex = 1
+        self.viewControllers = [home, drafts, hashtags, user]
+        self.selectedIndex = 0
+        
+        // Appearance
+        
+//        self.tabBar.standardAppearance.backgroundImage = UIImage().withTintColor(UIColor.systemGray6)
+//        self.tabBar.standardAppearance.shadowImage = UIImage().withTintColor(UIColor.systemGray6)
     }
 }

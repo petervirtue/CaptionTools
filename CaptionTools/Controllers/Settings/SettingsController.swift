@@ -10,83 +10,109 @@ import UIKit
 import StoreKit
 import SafariServices
 
-class SettingsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    // Settings options
-    
-    var options = ["Review the App", "Share the App", "Contact the Developer", "Privacy Policy"]
+class SettingsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     
     // Components
-    
+    var card: UIView!
+    var dismissBar: UIView!
     var tableView: UITableView!
-    var dragbar: UIView!
-    var titleLabel: UILabel!
     var developerLabel: UILabel!
-
+    
+    // Settings options
+    var options = ["Review the App", "Share the App", "Contact the Developer", "Privacy Policy"]
+    
+    // Constraints
+    var cardTopCon = NSLayoutConstraint()
+    var panStart: CGFloat = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Safe area
+        setup()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        let l = self.view.safeAreaLayoutGuide
+        showCard()
+    }
+    
+    func setup() {
         
-        // Background
+        let l = view.safeAreaLayoutGuide
         
-        self.view.backgroundColor = UIColor.init(named: "background2")!
+        // Main View Dimmed
         
-        // Drag bar
+        self.view.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
         
-        dragbar = UIView(frame: .zero)
-        dragbar.backgroundColor = UIColor.systemGray3
-        dragbar.layer.cornerRadius = 2.5
-        dragbar.translatesAutoresizingMaskIntoConstraints = false
+        // Card
+        card = UIView(frame: .zero)
+        card.backgroundColor = UIColor.init(named: "element2")
+        card.clipsToBounds = true
+        card.layer.cornerRadius = 10
+        card.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        card.translatesAutoresizingMaskIntoConstraints = false
         
-        let dragbarCons = [
-            dragbar.leftAnchor.constraint(equalTo: l.centerXAnchor, constant: -20),
-            dragbar.rightAnchor.constraint(equalTo: l.centerXAnchor, constant: 20),
-            dragbar.topAnchor.constraint(equalTo: l.topAnchor, constant: 10),
-            dragbar.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 15)
+        let cCons = [
+            card.leftAnchor.constraint(equalTo: l.leftAnchor),
+            card.rightAnchor.constraint(equalTo: l.rightAnchor),
+            card.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
         
-        self.view.addSubview(dragbar)
+        cardTopCon = card.topAnchor.constraint(equalTo: self.view.topAnchor, constant: view.frame.height)
         
-        NSLayoutConstraint.activate(dragbarCons)
+        self.view.addSubview(card)
+        NSLayoutConstraint.activate(cCons)
+        NSLayoutConstraint.activate([cardTopCon])
         
-        // Title label
+        // Dismiss bar
         
-        titleLabel = UILabel(frame: .zero)
-        titleLabel.font = UIFont(name: "Montserrat-Bold", size: 34)//UIFont.boldSystemFont(ofSize: 32)
-        titleLabel.textColor = UIColor.init(named: "textColor")!
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Settings"
+        dismissBar = UIView(frame: .zero)
+        dismissBar.backgroundColor = UIColor.systemGray3
+        dismissBar.translatesAutoresizingMaskIntoConstraints = false
+        dismissBar.clipsToBounds = true
+        dismissBar.layer.cornerRadius = 2.5
         
-        let titleCons = [
-            titleLabel.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 16),
-            titleLabel.rightAnchor.constraint(equalTo: l.rightAnchor, constant: -16),
-            titleLabel.topAnchor.constraint(equalTo: l.topAnchor, constant: 32),
-            titleLabel.bottomAnchor.constraint(equalTo: l.topAnchor, constant: 80)
+        let dbCons = [
+            dismissBar.leftAnchor.constraint(equalTo: l.centerXAnchor, constant: -32),
+            dismissBar.rightAnchor.constraint(equalTo: l.centerXAnchor, constant: 32),
+            dismissBar.topAnchor.constraint(equalTo: card.topAnchor, constant: 16),
+            dismissBar.bottomAnchor.constraint(equalTo: card.topAnchor, constant: 21)
         ]
         
-        self.view.addSubview(titleLabel)
+        self.view.addSubview(dismissBar)
+        NSLayoutConstraint.activate(dbCons)
         
-        NSLayoutConstraint.activate(titleCons)
+        // Tap Gesture
+        
+        let dimTap = UITapGestureRecognizer(target: self, action: #selector(nonCardTap(_:)))
+        dimTap.delegate = self
+        self.view.addGestureRecognizer(dimTap)
+        self.view.isUserInteractionEnabled = true
+        
+        // Pan Gesture
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(viewPanned(_:)))
+        pan.delaysTouchesBegan = false
+        pan.delaysTouchesEnded = false
+        self.view.addGestureRecognizer(pan)
         
         // Table view
-        
         tableView = UITableView(frame: .zero)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "settingsCell")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.init(named: "background2")!
+        tableView.backgroundColor = UIColor.init(named: "element2")!
+        tableView.isUserInteractionEnabled = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        //tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         
         let tableViewCons = [
-            tableView.leftAnchor.constraint(equalTo: l.leftAnchor, constant: 0),
-            tableView.rightAnchor.constraint(equalTo: l.rightAnchor, constant: 0),
-            tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
-            tableView.bottomAnchor.constraint(equalTo: l.bottomAnchor, constant: -20)//50)
+            tableView.leftAnchor.constraint(equalTo: card.leftAnchor, constant: 0),
+            tableView.rightAnchor.constraint(equalTo: card.rightAnchor, constant: 0),
+            tableView.topAnchor.constraint(equalTo: dismissBar.bottomAnchor, constant: 8),
+            tableView.bottomAnchor.constraint(equalTo: dismissBar.bottomAnchor, constant: 208)
         ]
         
         self.view.addSubview(tableView)
@@ -94,24 +120,113 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         NSLayoutConstraint.activate(tableViewCons)
         
         // Developer label
-        
         developerLabel = UILabel(frame: .zero)
-        developerLabel.text = "© 2020 Peter Virtue, All Rights Reserved"
+        developerLabel.text = "© 2021 Peter Virtue, All Rights Reserved"
         developerLabel.textAlignment = .center
         developerLabel.font = UIFont.systemFont(ofSize: 12)
-        developerLabel.textColor = UIColor.systemGray2
+        developerLabel.textColor = UIColor.systemGray
         developerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let devCons = [
             developerLabel.leftAnchor.constraint(equalTo: l.leftAnchor),
             developerLabel.rightAnchor.constraint(equalTo: l.rightAnchor),
-            developerLabel.bottomAnchor.constraint(equalTo: l.bottomAnchor),
-            developerLabel.topAnchor.constraint(equalTo: l.bottomAnchor, constant: -20)
+            developerLabel.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 28),
+            developerLabel.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16)
         ]
         
         self.view.addSubview(developerLabel)
         
         NSLayoutConstraint.activate(devCons)
+        
+    }
+    
+    func showCard() {
+        
+        // Layout if needed
+        
+        view.layoutIfNeeded()
+        
+        // Setting card view constant
+        
+        cardTopCon.constant = view.frame.height * (2 / 3)
+        
+        // Animation
+        
+        let showCard = UIViewPropertyAnimator(duration: 0.25, curve: .easeIn, animations: {
+            self.view.layoutIfNeeded()
+        })
+          
+        showCard.addAnimations({
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        })
+        
+        showCard.startAnimation()
+        
+    }
+    
+    @objc func nonCardTap(_ sender: UITapGestureRecognizer) {
+        
+        if !card.frame.contains(sender.location(in: self.view)) && !tableView.frame.contains(sender.location(in: self.view)) {
+            goBack()
+        }
+        
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if !card.frame.contains(touch.location(in: self.view)) && !tableView.frame.contains(touch.location(in: self.view)) {
+            return true
+        }
+        
+        return false
+    }
+    
+    @objc func viewPanned(_ sender: UIPanGestureRecognizer) {
+        // User drag translation
+        let loc = sender.translation(in: self.view)
+        
+        switch sender.state {
+            case .began:
+                panStart = cardTopCon.constant
+            case .changed:
+                if cardTopCon.constant < self.view.frame.height - self.view.safeAreaInsets.top * 2 && cardTopCon.constant > self.view.safeAreaInsets.bottom * 2 {
+                    self.cardTopCon.constant = self.panStart + loc.y
+                }
+            case .ended:
+                if cardTopCon.constant > self.view.frame.height * (4/5) {
+                    goBack()
+                } else {
+                    showCard()
+                }
+            default:
+                break
+        }
+    }
+    
+    func goBack() {
+        
+        self.view.layoutIfNeeded()
+          
+        cardTopCon.constant = view.frame.height
+        
+        // Animation
+        
+        let hideCard = UIViewPropertyAnimator(duration: 0.25, curve: .easeIn, animations: {
+            self.view.layoutIfNeeded()
+        })
+          
+        hideCard.addAnimations {
+            self.view.backgroundColor = .clear
+        }
+
+        hideCard.addCompletion({ position in
+            if position == .end {
+                if self.presentingViewController != nil {
+                    self.dismiss(animated: false, completion: nil)
+                }
+            }
+        })
+          
+        hideCard.startAnimation()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,10 +237,9 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
-        cell.backgroundColor = UIColor.init(named: "background2")!
+        cell.backgroundColor = UIColor.init(named: "element2")!
         cell.textLabel?.textColor = UIColor.init(named: "textColor")!
         cell.textLabel?.text = options[indexPath.row]
-        //cell.accessoryType = .disclosureIndicator
         let chevron = UIImageView(image: UIImage(systemName: "chevron.right"))
         chevron.tintColor = UIColor.systemGray3
         cell.accessoryView = chevron
@@ -149,11 +263,9 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Selection color
-        
-        tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.init(named: "element2")!
+        tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.init(named: "element")!
         
         // Feedback
-
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
         
@@ -223,7 +335,4 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
     }
-    
-    
-
 }

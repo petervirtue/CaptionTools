@@ -29,6 +29,17 @@ class HashtagsController: UITableViewController {
         self.title = "Hashtags"
         self.edgesForExtendedLayout = [.top]
         
+        // Tab bar controller
+
+        if let tbc = self.tabBarController {
+            if let items = tbc.tabBar.items
+            {
+                for item in items {
+                    item.title = ""
+                }
+            }
+        }
+        
         // Table view setup
         
         self.tableView.register(HashtagTableCell.self, forCellReuseIdentifier: "hashtagCell")
