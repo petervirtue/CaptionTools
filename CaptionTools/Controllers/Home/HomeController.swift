@@ -73,34 +73,27 @@ class HomeController: UIViewController, UITextViewDelegate {
     func setup() {
         
         // Safe Area
-        
         let l = self.view.safeAreaLayoutGuide
         
         // View
-        
         self.view.backgroundColor = UIColor.init(named: "background")!
         
         // Hiding the hairline
-        
         self.navigationController?.hideHairline()
         
         // Save Draft button
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"), style: .plain, target: self, action: #selector(saveCaption))
         
         // Share Button and Previe Button
         self.navigationItem.leftBarButtonItems = [UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareText)), UIBarButtonItem(image: UIImage(systemName: "person.crop.square"), style: .plain, target: self, action: #selector(showPreview))]
         
         // Tab bar controller
-                
         if let tbc = self.tabBarController {
             tbc.tabBar.barStyle = .default
             tbc.tabBar.barTintColor = UIColor.init(named: "tabColor")!
             tbc.tabBar.backgroundColor = UIColor.init(named: "tabColor")!
             tbc.tabBar.tintColor = UIColor.init(named: "textColor")!
             tbc.tabBar.unselectedItemTintColor = UIColor.systemGray2
-//            tbc.tabBar.shadowImage = UIImage()
-//            tbc.tabBar.backgroundImage = UIImage()
 
             if let items = tbc.tabBar.items
             {
@@ -111,7 +104,6 @@ class HomeController: UIViewController, UITextViewDelegate {
         }
         
         // Character Image
-        
         charactersImage = UIImageView(frame: .zero)
         charactersImage.image = UIImage(systemName: "t.square")
         charactersImage.translatesAutoresizingMaskIntoConstraints = false
@@ -131,7 +123,6 @@ class HomeController: UIViewController, UITextViewDelegate {
 
         
         // Character count
-    
         charactersUsed = UILabel(frame: .zero)
         charactersUsed.translatesAutoresizingMaskIntoConstraints = false
         charactersUsed.textAlignment = .left
@@ -151,7 +142,6 @@ class HomeController: UIViewController, UITextViewDelegate {
         NSLayoutConstraint.activate(countCons)
         
         // Hashtag Image
-        
         hashtagsImage = UIImageView(frame: .zero)
         hashtagsImage.image = UIImage(systemName: "number.square")
         hashtagsImage.translatesAutoresizingMaskIntoConstraints = false
@@ -170,7 +160,6 @@ class HomeController: UIViewController, UITextViewDelegate {
         NSLayoutConstraint.activate(hashtagImageCons)
         
         // Hashtag count
-        
         hashtagsUsed = UILabel(frame: .zero)
         hashtagsUsed.translatesAutoresizingMaskIntoConstraints = false
         hashtagsUsed.textAlignment = .left
@@ -190,7 +179,6 @@ class HomeController: UIViewController, UITextViewDelegate {
         NSLayoutConstraint.activate(hashtagCons)
         
         // captionIn
-        
         captionIn = UITextView(frame: .zero)
         captionIn.translatesAutoresizingMaskIntoConstraints = false
         captionIn.backgroundColor = UIColor.init(named: "background")!
@@ -209,30 +197,23 @@ class HomeController: UIViewController, UITextViewDelegate {
         ]
         
         captionInBottom = captionIn.bottomAnchor.constraint(equalTo: l.bottomAnchor, constant: -110)
-        //captionInKeyboard = captionIn.bottomAnchor.constraint(equalTo: l.centerYAnchor)
-
-        self.view.addSubview(captionIn)
         
+        self.view.addSubview(captionIn)
         NSLayoutConstraint.activate(captionInCons)
         
         captionInBottom.isActive = true
-        //captionInKeyboard.isActive = false
-        
+
         // Toolbar
-        
         toolbar = FormatTextBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         toolbar.keyboardDown.addTarget(self, action: #selector(closeKeyboard), for: .touchUpInside)
         captionIn.inputAccessoryView = toolbar
         
         // Copy button
-        
         copyButton = UIButton()//(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 170, height: 50))
         copyButton.translatesAutoresizingMaskIntoConstraints = false
         copyButton.titleLabel?.font = UIFont(name: "Montserrat-Bold", size: 18)//UIFont.boldSystemFont(ofSize: 18)
         copyButton.setTitle("COPY CAPTION", for: .normal)
         copyButton.layer.cornerRadius = 15
-        //copyButton.layer.borderWidth = 2.5
-        //copyButton.layer.borderColor = Colors.igPink!.cgColor
         copyButton.clipsToBounds = true
         copyButton.tintColor = UIColor.white//UIColor.init(named: "pink")!
         copyButton.backgroundColor = UIColor.init(named: "pink")!
@@ -246,11 +227,9 @@ class HomeController: UIViewController, UITextViewDelegate {
         ]
         
         self.view.addSubview(copyButton)
-        
         NSLayoutConstraint.activate(copyCons)
         
         // Button targets
-        
         copyButton.addTarget(self, action: #selector(copyToClipboard), for: .touchUpInside)
         toolbar.normal.addTarget(self, action: #selector(setNormal), for: .touchUpInside)
         toolbar.bold.addTarget(self, action: #selector(setBold), for: .touchUpInside)
@@ -260,111 +239,79 @@ class HomeController: UIViewController, UITextViewDelegate {
     }
     
     // Show preview
-    
     @objc func showPreview(_ sender: UIButton) {
         
         // Get text
-        
         let mas = NSMutableAttributedString(attributedString: captionIn.attributedText)
         
         // Setup view controller
-        
         let pvc = PreviewController()
         pvc.mas = mas
-        //pvc.addCaption(mas)
         
         // Feedback
-        
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
         
         // Present
-        
         self.present(pvc, animated: true, completion: nil)
     }
     
     // Share text
-    
     @objc func shareText(_ sender: UIButton) {
         
         // Get text
-        
         let text = captionIn.text
         
-        
         // Share VC
-        
         let share = [text]
         let ac = UIActivityViewController(activityItems: share as [Any], applicationActivities: nil)
         
         // Feedback
-        
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
         
         // Present
-        
         self.present(ac, animated: true, completion: nil)
     }
     
     // Copy to clipboard
-    
     @objc func copyToClipboard(_ sender: UIButton) {
         
         // Set the text
-        
         UIPasteboard.general.set(attributedString: captionIn.attributedText)
         
         // Original text
-        
         let original = sender.title(for: .normal)
         
         // Change the button text
-        
         sender.setTitle("Copied!", for: .normal)
         
         // Feedback
-        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
         
         // Change it back
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             sender.setTitle(original, for: .normal)
         }
     }
     
     // Set normal text
-    
     @objc func setNormal(_ sender: UIButton) {
         
         // Attributes
-        
         let attrs: [NSAttributedString.Key : Any] = [
             .font : UIFont.systemFont(ofSize: 16)
         ]
-        
-        // Set selected text to normal
-        /*
-        let range = captionIn.selectedRange
-        let toChange = NSMutableAttributedString(attributedString: captionIn.attributedText)
-        toChange.addAttributes(attrs, range: range)
-        captionIn.attributedText = toChange
-        captionIn.selectedRange = range
-        */
-        // Set text kind
         
         captionIn.typingAttributes = attrs
         typingStatus = 0
         
         // Feedback
-
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
         
         // Edit the buttons
-        
         toolbar.bold.tintColor = UIColor.systemGray2
         toolbar.italic.tintColor = UIColor.systemGray2
         toolbar.normal.tintColor = UIColor.init(named: "textColor")!
@@ -375,16 +322,13 @@ class HomeController: UIViewController, UITextViewDelegate {
     @objc func setBold(_ sender: UIButton) {
         
         // Set typing attributes
-        
         typingStatus = 1
         
         // Feedback
-
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
         
         // Edit the buttons
-        
         toolbar.bold.tintColor = UIColor.init(named: "textColor")!
         toolbar.italic.tintColor = UIColor.systemGray2
         toolbar.normal.tintColor = UIColor.systemGray2
