@@ -483,7 +483,7 @@ class HomeController: UIViewController, UITextViewDelegate {
             UserDefaults.standard.set(amountSaved + 1, forKey: "saved")
             
             if amountSaved == 5 {
-                SKStoreReviewController.requestReview()
+                SKStoreReviewController.requestReviewInCurrentScene()
             }
             
             // Save caption to drafts

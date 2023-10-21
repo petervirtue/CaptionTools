@@ -112,8 +112,10 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         NSLayoutConstraint.activate(tableViewCons)
         
         // Developer label
+        let year = Calendar.current.component(.year, from: Date())
+
         developerLabel = UILabel(frame: .zero)
-        developerLabel.text = "© 2021 Peter Virtue, All Rights Reserved"
+        developerLabel.text = "© \(year) Peter Virtue, All Rights Reserved"
         developerLabel.textAlignment = .center
         developerLabel.font = UIFont.systemFont(ofSize: 12)
         developerLabel.textColor = UIColor.systemGray
@@ -274,7 +276,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     // Let users rate the app
     
     func rateApp() {
-        SKStoreReviewController.requestReview()
+        SKStoreReviewController.requestReviewInCurrentScene()
     }
     
     // Let users share the app
