@@ -615,15 +615,16 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YVS4RVRH78;
 				INFOPLIST_FILE = CaptionTools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				INFOPLIST_KEY_CFBundleDisplayName = "Caption Tools";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.petervirtue.captionBreak;
 				PRODUCT_NAME = "Caption Tools";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -639,15 +640,16 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YVS4RVRH78;
 				INFOPLIST_FILE = CaptionTools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				INFOPLIST_KEY_CFBundleDisplayName = "Caption Tools";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.petervirtue.captionBreak;
 				PRODUCT_NAME = "Caption Tools";
 				PROVISIONING_PROFILE_SPECIFIER = "";
