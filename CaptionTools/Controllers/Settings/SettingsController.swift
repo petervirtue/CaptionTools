@@ -38,12 +38,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func setup() {
-        
         let l = view.safeAreaLayoutGuide
-        
-        // Main View Dimmed
-        
-        self.view.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
         
         // Card
         card = UIView(frame: .zero)
@@ -66,7 +61,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         NSLayoutConstraint.activate([cardTopCon])
         
         // Dismiss bar
-        
         dismissBar = UIView(frame: .zero)
         dismissBar.backgroundColor = UIColor.systemGray3
         dismissBar.translatesAutoresizingMaskIntoConstraints = false
@@ -84,14 +78,12 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         NSLayoutConstraint.activate(dbCons)
         
         // Tap Gesture
-        
         let dimTap = UITapGestureRecognizer(target: self, action: #selector(nonCardTap(_:)))
         dimTap.delegate = self
         self.view.addGestureRecognizer(dimTap)
         self.view.isUserInteractionEnabled = true
         
         // Pan Gesture
-        
         let pan = UIPanGestureRecognizer(target: self, action: #selector(viewPanned(_:)))
         pan.delaysTouchesBegan = false
         pan.delaysTouchesEnded = false
@@ -120,8 +112,10 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
         NSLayoutConstraint.activate(tableViewCons)
         
         // Developer label
+        let year = Calendar.current.component(.year, from: Date())
+
         developerLabel = UILabel(frame: .zero)
-        developerLabel.text = "© 2021 Peter Virtue, All Rights Reserved"
+        developerLabel.text = "© \(year) Peter Virtue, All Rights Reserved"
         developerLabel.textAlignment = .center
         developerLabel.font = UIFont.systemFont(ofSize: 12)
         developerLabel.textColor = UIColor.systemGray
@@ -141,18 +135,14 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func showCard() {
-        
         // Layout if needed
-        
         view.layoutIfNeeded()
         
         // Setting card view constant
-        
         cardTopCon.constant = view.frame.height * (2 / 3)
         
         // Animation
-        
-        let showCard = UIViewPropertyAnimator(duration: 0.25, curve: .easeIn, animations: {
+        let showCard = UIViewPropertyAnimator(duration: 0.2, curve: .easeIn, animations: {
             self.view.layoutIfNeeded()
         })
           
@@ -165,7 +155,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @objc func nonCardTap(_ sender: UITapGestureRecognizer) {
-        
         if !card.frame.contains(sender.location(in: self.view)) && !tableView.frame.contains(sender.location(in: self.view)) {
             goBack()
         }
@@ -203,14 +192,12 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func goBack() {
-        
         self.view.layoutIfNeeded()
-          
+
         cardTopCon.constant = view.frame.height
         
         // Animation
-        
-        let hideCard = UIViewPropertyAnimator(duration: 0.25, curve: .easeIn, animations: {
+        let hideCard = UIViewPropertyAnimator(duration: 0.2, curve: .easeIn, animations: {
             self.view.layoutIfNeeded()
         })
           
@@ -230,7 +217,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return options.count
     }
 
@@ -261,7 +247,6 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         // Selection color
         tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor.init(named: "element")!
         
@@ -291,13 +276,11 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     // Let users rate the app
     
     func rateApp() {
-        SKStoreReviewController.requestReview()
+        SKStoreReviewController.requestReviewInCurrentScene()
     }
     
     // Let users share the app
-    
     func shareApp() {
-        
         if let urlStr = NSURL(string: "https://itunes.apple.com/us/app/myapp/1518247106?ls=1&mt=8") {
             let objectsToShare = [urlStr]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
@@ -314,9 +297,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // Let users check the privacy policy
-    
     func openPrivacyPolicy() {
-        
         if let url = URL(string: "https://petervirtue.com/privacy/captiontools/") {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
@@ -327,12 +308,9 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // Let users email me
-    
     func contactDev() {
-        
         if let url = URL(string: "mailto:petervirtue18@gmail.com") {
             UIApplication.shared.open(url)
         }
-        
     }
 }
